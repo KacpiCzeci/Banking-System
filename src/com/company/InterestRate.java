@@ -5,6 +5,12 @@ public class InterestRate {
     private Double depositRate;
     private Double loanRate;
 
+    public InterestRate(Double aR, Double dR, Double lR){
+        this.accountRate = aR;
+        this.depositRate = dR;
+        this.loanRate = lR;
+    }
+
     public Double getAccountRate() {
         return accountRate;
     }

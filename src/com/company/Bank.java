@@ -50,8 +50,8 @@ public class Bank {
         return interBankPayments;
     }
 
-    public void createAccount(String owner){
-        accounts.add(new Account(owner));
+    public void createAccount(String owner, TransferVerification trVr){
+        accounts.add(new Account(this, owner, trVr));
     }
 
     public void deleteAccount(Integer id){
@@ -84,7 +84,7 @@ public class Bank {
                     accStr = accStr + "Owner: " + account.getOwner().toString() + "\n";
                     accStr = accStr + "Money: " + account.getTotalMoney().toString() + "\n";
                     accStr = accStr + "History of operations: \n";
-                    for (Transaction transaction: account.getTransactions()) {
+                    for (Transaction transaction: account.getHistoryOfOperations()) {
                         accStr = accStr + transaction.getDateOdTransaction().toString() + " ";
                         accStr = accStr + transaction.getAmount().toString() + " ";
                         accStr = accStr + "to " + transaction.getReceiver().getOwner().toString() + "\n";
@@ -100,10 +100,10 @@ public class Bank {
                     accStr = accStr + "Account: " + account.getId().toString() + "\n";
                     accStr = accStr + "Owner: " + account.getOwner().toString() + "\n";
                     accStr = accStr + "Money: " + account.getTotalMoney().toString() + "\n";
-                    accStr = accStr + "Total number of operations: " + account.getTransactions().size() + "\n";
-                    accStr = accStr + "Total money received: " + account.getTransactions().stream()
+                    accStr = accStr + "Total number of operations: " + account.getHistoryOfOperations().size() + "\n";
+                    accStr = accStr + "Total money received: " + account.getHistoryOfOperations().stream()
                             .filter(tran -> tran.getReceiver().equals(account)).mapToDouble(Transaction::getAmount).sum() + "\n";
-                    accStr = accStr + "Total money spend: " + account.getTransactions().stream()
+                    accStr = accStr + "Total money spend: " + account.getHistoryOfOperations().stream()
                             .filter(tran -> tran.getSender().equals(account)).mapToDouble(Transaction::getAmount).sum() + "\n";
                     accStr = accStr + "=======================================\n";
                     content.append(accStr);

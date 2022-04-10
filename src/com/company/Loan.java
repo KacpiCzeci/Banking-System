@@ -30,8 +30,12 @@ public class Loan {
         return closeDate;
     }
 
-    public Double payLoan(){
+    public Double getLoan(){
         Double time = (double) ChronoUnit.YEARS.between(startDate, closeDate);
         return amount + loanRate.calculateInterestRate("loan", amount, time);
+    }
+
+    public void payLoan(){
+        this.amount = 0.00;
     }
 }

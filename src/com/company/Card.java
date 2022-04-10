@@ -1,14 +1,14 @@
 package com.company;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Card {
     private Account myAccount;
     private Integer number;
     private Integer cvc;
-    private Date expirationDate;
+    private LocalDateTime expirationDate;
 
-    public Card(Account acc, Integer num, Integer cvc, Date expD){
+    public Card(Account acc, Integer num, Integer cvc, LocalDateTime expD){
         this.myAccount = acc;
         this.number = num;
         this.cvc = cvc;
@@ -27,11 +27,11 @@ public class Card {
         return cvc;
     }
 
-    public Date getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public void payByCard(){
-        myAccount.useCardPayment();
+    public void payByCard(Double amount, Account recv){
+        myAccount.useCardPayment(this.number, recv, amount);
     }
 }

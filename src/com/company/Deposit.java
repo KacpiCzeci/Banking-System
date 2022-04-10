@@ -30,7 +30,7 @@ public class Deposit {
         return closeDate;
     }
 
-    public Double withdrawMoney(Double money){
+    public Double withdrawMoney(){
         if(LocalDateTime.now().isBefore(this.closeDate)){
             return this.amount;
         }

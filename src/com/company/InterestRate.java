@@ -26,13 +26,13 @@ public class InterestRate {
     public Double calculateInterestRate(String nameRate, Double principal, Double time){
         switch (nameRate){
             case "account":
-                return principal * accountRate * time;
+                return Math.round(principal * accountRate * time * 100) / 100.0;
             case "deposit":
-                return principal * depositRate * time;
+                return Math.round(principal * depositRate * time * 100) / 100.0;
             case "loan":
-                return  principal * loanRate * time;
+                return  Math.round(principal * loanRate * time * 100) / 100.0;
             default:
-                return principal * 1.0 * time;
+                return Math.round(principal * 1.0 * time * 100) / 100.0;
         }
     }
 }

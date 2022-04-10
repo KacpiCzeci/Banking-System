@@ -18,11 +18,11 @@ public class Account {
     public Account(Bank bank, String owner, TransferVerification trVr){
         this.owner = owner;
         this.dateOfOpening = LocalDateTime.now();
-        this.historyOfOperations = new ArrayList<Transaction>();
+        this.historyOfOperations = new ArrayList<>();
         this.totalMoney = 0.00;
-        this.deposits = new ArrayList<Deposit>();
-        this.loans = new ArrayList<Loan>();
-        this.cards = new ArrayList<Card>();
+        this.deposits = new ArrayList<>();
+        this.loans = new ArrayList<>();
+        this.cards = new ArrayList<>();
         this.myBank = bank;
         this.transferVerification = trVr;
     }
@@ -47,12 +47,34 @@ public class Account {
         return totalMoney;
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public Bank getMyBank() {
+        return myBank;
+    }
+
+    public ArrayList<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    public ArrayList<Loan> getLoans() {
+        return loans;
+    }
+
     public void depositMoney(Double amount){
         this.totalMoney += amount;
     }
 
-    public Boolean makeTransaction(Account recv, Double amount){
-        Transaction transaction = new Transaction(this, recv, amount);
+    public Boolean makeTransaction(Account recv, Double amount, Card card){
+        Transaction transaction;
+        if(card == null){
+            transaction = new Transaction(this, recv, amount);
+        }
+        else{
+            transaction = new Transaction(this, recv, card, amount);
+        }
         if(transferVerification.verifyTransaction(transaction)){
             this.historyOfOperations.add(transaction);
             return true;
@@ -60,12 +82,13 @@ public class Account {
         return false;
     }
 
-    public void makePayment(){
-
+    public void takePayment(Transaction transaction){
+        this.historyOfOperations.add(transaction);
+        this.totalMoney += transaction.getAmount();
     }
 
     public Double withdrawMoney(Double amount){
-        if(!this.makeTransaction(this, amount)){
+        if(!this.makeTransaction(this, amount, null)){
             return -1.0;
         }
         if(this.totalMoney - amount >= 0.00){
@@ -120,8 +143,8 @@ public class Account {
         this.cards.removeIf(card -> card.getNumber().equals(id));
     }
 
-    public void useCardPayment(Integer id, Account recv, Double amount){
-        if(!this.transferVerification.cardValidation(id) || !this.makeTransaction(recv, amount)){
+    public void useCardPayment(Card card, Account recv, Double amount){
+        if(!this.makeTransaction(recv, amount, card)){
             return;
         }
         this.totalMoney -= amount;

@@ -67,8 +67,8 @@ public class Bank {
 
     public void takeInterbankPayment(Transaction transaction){
         for (Account account: accounts) {
-            if(account.equals(transaction.getReceiverAccount())){
-                account.makePayment(transaction);
+            if(account.equals(transaction.getReceiver())){
+                account.takePayment(transaction);
                 return;
             }
         }
@@ -85,7 +85,7 @@ public class Bank {
                     accStr = accStr + "Money: " + account.getTotalMoney().toString() + "\n";
                     accStr = accStr + "History of operations: \n";
                     for (Transaction transaction: account.getHistoryOfOperations()) {
-                        accStr = accStr + transaction.getDateOdTransaction().toString() + " ";
+                        accStr = accStr + transaction.getDateOfTransaction().toString() + " ";
                         accStr = accStr + transaction.getAmount().toString() + " ";
                         accStr = accStr + "to " + transaction.getReceiver().getOwner().toString() + "\n";
                     }

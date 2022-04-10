@@ -23,7 +23,7 @@ public class DebitAccount extends Account {
     }
 
     @Override
-    public void addMoney(Double amount){
+    public void depositMoney(Double amount){
         if(this.debit > 0.00){
             if(this.debit < amount){
                 this.totalMoney += (amount - this.debit);

@@ -32,6 +32,6 @@ public class Card {
     }
 
     public void payByCard(Double amount, Account recv){
-        myAccount.useCardPayment(this.number, recv, amount);
+        myAccount.useCardPayment(this, recv, amount);
     }
 }

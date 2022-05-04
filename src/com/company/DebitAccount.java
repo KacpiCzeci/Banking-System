@@ -4,8 +4,8 @@ public class DebitAccount extends Account {
     private Double debitLimit;
     private Double debit;
 
-    private DebitAccount(Bank bank, String owner, TransferVerification trVr){
-        super(bank, owner, trVr);
+    private DebitAccount(Bank bank, String owner,Integer id, TransferVerification trVr){
+        super(bank, owner, id, trVr);
         this.debitLimit = 0.0;
         this.debit = 0.0;
     }

@@ -24,6 +24,9 @@ public class InterestRate {
     }
 
     public Double calculateInterestRate(String nameRate, Double principal, Double time){
+        if(principal<0.0) {
+            return -1.0;
+        }
         switch (nameRate){
             case "account":
                 return Math.round(principal * accountRate * time * 100) / 100.0;
@@ -32,7 +35,7 @@ public class InterestRate {
             case "loan":
                 return  Math.round(principal * loanRate * time * 100) / 100.0;
             default:
-                return Math.round(principal * 1.0 * time * 100) / 100.0;
+                return Math.round(principal * 1.0 * 100) / 100.0;
         }
     }
 }

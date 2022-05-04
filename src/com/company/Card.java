@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 
 public class Card {
     private Account myAccount;
-    private Integer number;
+    private Long number;
     private Integer cvc;
     private LocalDateTime expirationDate;
 
-    public Card(Account acc, Integer num, Integer cvc, LocalDateTime expD){
+    public Card(Account acc, Long num, Integer cvc, LocalDateTime expD){
         this.myAccount = acc;
         this.number = num;
         this.cvc = cvc;
@@ -19,7 +19,7 @@ public class Card {
         return this.myAccount;
     }
 
-    public Integer getNumber() {
+    public Long getNumber() {
         return number;
     }
 

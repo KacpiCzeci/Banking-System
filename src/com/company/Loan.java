@@ -10,10 +10,10 @@ public class Loan {
     private LocalDateTime closeDate;
     private InterestRate loanRate;
 
-    public Loan(Long id, Double amt, LocalDateTime cD, InterestRate lR){
+    public Loan(Long id, Double amt, LocalDateTime sD, LocalDateTime cD, InterestRate lR){
         this.id = id;
         this.amount = amt;
-        this.startDate = LocalDateTime.now();
+        this.startDate = sD;
         this.closeDate = cD;
         this.loanRate = lR;
     }
@@ -31,7 +31,7 @@ public class Loan {
     }
 
     public Double getLoan(){
-        Double time = (double) ChronoUnit.YEARS.between(startDate, closeDate);
+        Double time = (double) ChronoUnit.MONTHS.between(startDate, closeDate);
         return amount + loanRate.calculateInterestRate("loan", amount, time);
     }
 

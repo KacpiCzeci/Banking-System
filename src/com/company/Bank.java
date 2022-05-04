@@ -51,11 +51,11 @@ public class Bank {
     }
 
     public void createAccount(String owner, TransferVerification trVr){
-        accounts.add(new Account(this, owner, trVr));
+        accounts.add(new Account(this, owner, accounts.size(), trVr));
     }
 
     public void deleteAccount(Integer id){
-        accounts.removeIf(account -> account.getId().equals(id));
+        accounts.remove(id.intValue());
     }
 
     public void makeInterBankPayments(){

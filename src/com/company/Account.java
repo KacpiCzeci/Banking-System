@@ -15,7 +15,8 @@ public class Account {
     protected Bank myBank;
     protected TransferVerification transferVerification;
 
-    public Account(Bank bank, String owner, TransferVerification trVr){
+    public Account(Bank bank, String owner,Integer id, TransferVerification trVr){
+        this.id=id;
         this.owner = owner;
         this.dateOfOpening = LocalDateTime.now();
         this.historyOfOperations = new ArrayList<>();
@@ -100,11 +101,9 @@ public class Account {
         }
     }
 
-    public void addDeposit(Long id, Double amount, Boolean fromAccount){
-        this.deposits.add(new Deposit(id, amount, LocalDateTime.now(), myBank.getInterestRate()));
-        if(fromAccount){
-            this.totalMoney -= amount;
-        }
+    public void addDeposit(Long id, Double amount, Integer time){
+        this.deposits.add(new Deposit(id, amount, LocalDateTime.now(), LocalDateTime.now().plusMonths(time), myBank.getInterestRate()));
+        this.totalMoney -= amount;
     }
 
     public void closeDeposit(Long id){
@@ -117,8 +116,8 @@ public class Account {
         }
     }
 
-    public void addLoan(Long id, Double amount){
-        this.loans.add(new Loan(id, amount, LocalDateTime.now(), myBank.getInterestRate()));
+    public void addLoan(Long id, Double amount, Integer time){
+        this.loans.add(new Loan(id, amount, LocalDateTime.now(), LocalDateTime.now().plusMonths(time), myBank.getInterestRate()));
         this.totalMoney += amount;
     }
 
@@ -135,7 +134,7 @@ public class Account {
         }
     }
 
-    public void addCard(Integer id, Integer cvc, LocalDateTime expDate){
+    public void addCard(Long id, Integer cvc, LocalDateTime expDate){
         this.cards.add(new Card(this, id, cvc, expDate));
     }
 

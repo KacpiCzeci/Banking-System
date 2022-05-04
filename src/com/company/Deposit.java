@@ -10,10 +10,10 @@ public class Deposit {
     private LocalDateTime closeDate;
     private InterestRate depsitRate;
 
-    public Deposit(Long id, Double amt, LocalDateTime cD, InterestRate dR){
+    public Deposit(Long id, Double amt, LocalDateTime sD, LocalDateTime cD, InterestRate dR){
         this.id = id;
         this.amount = amt;
-        this.startDate = LocalDateTime.now();
+        this.startDate = sD;
         this.closeDate = cD;
         this.depsitRate = dR;
     }
@@ -34,7 +34,7 @@ public class Deposit {
         if(LocalDateTime.now().isBefore(this.closeDate)){
             return this.amount;
         }
-        Double time = (double) ChronoUnit.YEARS.between(startDate, closeDate);
-        return amount + depsitRate.calculateInterestRate("deposit", amount, time);
+        Double time = (double) ChronoUnit.MONTHS.between(startDate, closeDate);
+        return depsitRate.calculateInterestRate("deposit", amount, time);
     }
 }

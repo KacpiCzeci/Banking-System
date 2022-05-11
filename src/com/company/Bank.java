@@ -1,28 +1,31 @@
 package com.company;
 
+import com.company.BankProduct.*;
+import com.company.BankProduct.Data.BankProductData;
+import com.company.InterBankPayment.IBPAagency;
+import com.company.InterBankPayment.InterBankPayment;
+import com.company.Transaction.HistoryOfOperations;
+import com.company.Transaction.SpecificTransactions.InterBankTransaction;
+import com.company.Transaction.Transaction;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class Bank {
-    private Integer id;
-    private String name;
-    private Double totalMoney;
-    private ArrayList<Account> accounts;
-    private InterestRate interestRate;
-    private ArrayList<Report> reports;
-    private ArrayList<InterBankPayment> interBankPayments;
+    private final String id;
+    private final String name;
+    private final BankProductOrganizer bankOrganizer = new BankProductOrganizer();
+    private final IBPAagency ibpaAgency;
+    private final ArrayList<User> users = new ArrayList<>();
+    private final HistoryOfOperations historyOfOperations = new HistoryOfOperations();
+    private final BankProductFactory bankProductFactory = new BankProductFactory();
 
-    public Bank(Integer id, String name, Double aR, Double dR, Double lR){
+    public Bank(String id, String name, IBPAagency ibpaAgency){
         this.id = id;
         this.name = name;
-        this.totalMoney = 0.0;
-        this.accounts = new ArrayList<Account>();
-        this.interestRate = new InterestRate(aR, dR, lR);
-        this.reports = new ArrayList<Report>();
-        this.interBankPayments = new ArrayList<InterBankPayment>();
+        this.ibpaAgency = ibpaAgency;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -30,88 +33,40 @@ public class Bank {
         return name;
     }
 
-    public Double getTotalMoney() {
-        return totalMoney;
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
-    public ArrayList<Account> getAccounts() {
-        return accounts;
+    public void addToHistory(Transaction transaction){
+        this.historyOfOperations.addOperation(transaction);
     }
 
-    public ArrayList<Report> getReports() {
-        return reports;
+    public BankProduct createBankProduct(BankProductType type, BankProductData bankProductData){
+        BankProduct bankProduct = bankProductFactory.create(type, bankProductData);
+        this.bankOrganizer.addBankProduct(bankProduct);
+        return bankProduct;
     }
 
-    public InterestRate getInterestRate() {
-        return interestRate;
+    public void deleteBankProduct(String id, BankProductType type){
+        bankOrganizer.deleteProduct(id, type);
     }
 
-    public ArrayList<InterBankPayment> getInterBankPayments() {
-        return interBankPayments;
+    public void createUser(String id){
+        users.add(new User(id, this));
     }
 
-    public void createAccount(String owner, TransferVerification trVr){
-        accounts.add(new Account(this, owner, accounts.size(), trVr));
+    public void deleteUser(String id){
+        users.stream().filter(u -> u.getId().equals(id)).findFirst().ifPresent(user -> user.setStatus(UserStatus.DELETED));
     }
 
-    public void deleteAccount(Integer id){
-        accounts.remove(id.intValue());
+    public void makeInterBankPayments(InterBankPayment interBankPayment){
+        this.ibpaAgency.addNewInterBankPayments(interBankPayment);
     }
 
-    public void makeInterBankPayments(){
-        for (InterBankPayment payment: interBankPayments) {
-            payment.getPaymentBank().takeInterbankPayment(payment.getTransaction());
-        }
-        interBankPayments.clear();
-    }
-
-    public void takeInterbankPayment(Transaction transaction){
-        for (Account account: accounts) {
-            if(account.equals(transaction.getReceiver())){
-                account.takePayment(transaction);
-                return;
-            }
-        }
-    }
-
-    public void generateReport(String type){
-        StringBuilder content = new StringBuilder(new String(""));
-        switch (type){
-            case "payment":
-                for (Account account: accounts) {
-                    String accStr = new String("=======================================\n");
-                    accStr = accStr + "Account: " + account.getId().toString() + "\n";
-                    accStr = accStr + "Owner: " + account.getOwner().toString() + "\n";
-                    accStr = accStr + "Money: " + account.getTotalMoney().toString() + "\n";
-                    accStr = accStr + "History of operations: \n";
-                    for (Transaction transaction: account.getHistoryOfOperations()) {
-                        accStr = accStr + transaction.getDateOfTransaction().toString() + " ";
-                        accStr = accStr + transaction.getAmount().toString() + " ";
-                        accStr = accStr + "to " + transaction.getReceiver().getOwner().toString() + "\n";
-                    }
-                    accStr = accStr + "=======================================\n";
-                    content.append(accStr);
-                }
-                reports.add(new Report(type, content.toString()));
-                break;
-            case "statistic":
-                for (Account account: accounts) {
-                    String accStr = new String("=======================================\n");
-                    accStr = accStr + "Account: " + account.getId().toString() + "\n";
-                    accStr = accStr + "Owner: " + account.getOwner().toString() + "\n";
-                    accStr = accStr + "Money: " + account.getTotalMoney().toString() + "\n";
-                    accStr = accStr + "Total number of operations: " + account.getHistoryOfOperations().size() + "\n";
-                    accStr = accStr + "Total money received: " + account.getHistoryOfOperations().stream()
-                            .filter(tran -> tran.getReceiver().equals(account)).mapToDouble(Transaction::getAmount).sum() + "\n";
-                    accStr = accStr + "Total money spend: " + account.getHistoryOfOperations().stream()
-                            .filter(tran -> tran.getSender().equals(account)).mapToDouble(Transaction::getAmount).sum() + "\n";
-                    accStr = accStr + "=======================================\n";
-                    content.append(accStr);
-                }
-                reports.add(new Report(type, content.toString()));
-                break;
-            default:
-                break;
+    public void takeInterbankPayment(InterBankTransaction transaction){
+        Account account = (Account) this.bankOrganizer.returnProduct(transaction.getReceiverID(), BankProductType.ACCOUNT);
+        if(account != null && account.getStatus().equals(BankProductStatus.ACTIVE)){
+            account.takePayment(transaction);
         }
     }
 }

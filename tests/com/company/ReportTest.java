@@ -1,8 +1,7 @@
 package com.company;
 
+import com.company.Report.Report;
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReportTest {
 

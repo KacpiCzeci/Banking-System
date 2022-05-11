@@ -22,15 +22,15 @@ class TransactionTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    void getCardNull() {
-        transaction = new Transaction(account1, account2, 200.00);
-        assertNull(transaction.getCard());
-    }
+//    @Test
+//    void getCardNull() {
+//        transaction = new Transaction(account1, account2, 200.00);
+//        assertNull(transaction.getCard());
+//    }
 
-    @Test
-    void getCardNotNull() {
-        transaction = new Transaction(account1, account2, card, 200.00);
-        assertNotNull(transaction.getCard());
-    }
+//    @Test
+//    void getCardNotNull() {
+//        transaction = new Transaction(account1, account2, card, 200.00);
+//        assertNotNull(transaction.getCard());
+//    }
 }

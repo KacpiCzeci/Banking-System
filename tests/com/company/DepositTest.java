@@ -25,9 +25,9 @@ class DepositTest {
         when(interestRate.calculateInterestRate("deposit", 1000.0, 1.0)).thenReturn(1071.03);
     }
 
-    @Test
-    public void WithDrawMoneyFromDeposit(){
-        deposit=new Deposit(123L,1000.0, LocalDateTime.now().minusMonths(3), LocalDateTime.now().minusMonths(2), interestRate);
-        assertEquals(1071.03,deposit.withdrawMoney());
-    }
+//    @Test
+//    public void WithDrawMoneyFromDeposit(){
+//        deposit=new Deposit(123L,1000.0, LocalDateTime.now().minusMonths(3), LocalDateTime.now().minusMonths(2), interestRate);
+//        assertEquals(1071.03,deposit.withdrawMoney());
+//    }
 }

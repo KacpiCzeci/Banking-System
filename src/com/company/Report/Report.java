@@ -12,7 +12,7 @@ public abstract class Report {
 
     public Report(ReportType type) {
         this.type = type;
-        this. content = "";
+        this.content = "";
         this.generated = null;
     }
 

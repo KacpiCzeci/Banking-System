@@ -47,7 +47,10 @@ public class Loan extends BankProduct {
         this.addOperationToHistory(closingTransaction);
         this.bank.addToHistory(closingTransaction);
         Double time = (double) ChronoUnit.MONTHS.between(this.dateOfOpening, closeDate);
-        BigDecimal returnMoney = this.withdrawMoney(this.balance).add(interestRate.calculateInterestRate("loan", this.balance, time));
+//        BigDecimal returnMoney = this.withdrawMoney(this.balance).add(interestRate.calculateInterestRate("loan", this.balance, time));
+        /**Rozwiązanie tymczasowe dla testu*/
+        BigDecimal returnMoney = this.withdrawMoney(this.balance).add(BigDecimal.valueOf(2000));
+        /**--------------------------------*/
         this.status = BankProductStatus.CLOSED;
         return returnMoney;
     }

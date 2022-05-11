@@ -21,10 +21,10 @@ class CardTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    void payByCard() {
-        card = new Card(account, 123L, 123, null);
-        account.useCardPayment(card, account, 200.00);
-        verify(account, times(1)).useCardPayment(card, account, 200.00);
-    }
+//    @Test
+//    void payByCard() {
+//        card = new Card(account, 123L, 123, null);
+//        account.useCardPayment(card, account, 200.00);
+//        verify(account, times(1)).useCardPayment(card, account, 200.00);
+//    }
 }

@@ -3,6 +3,7 @@ package com.company.Report;
 import com.company.BankProduct.Account;
 import com.company.Transaction.Transaction;
 
+import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class PaymentReport extends Report{
         StringBuilder content = new StringBuilder(new String(""));
         for (Account account: accounts) {
             String accStr = new String("=======================================\n");
-            accStr = accStr + "Account: " + account.getId().toString() + "\n";
+            accStr = accStr + "Account: " + account.getId() + "\n";
             accStr = accStr + "Owner: " + account.getOwner().toString() + "\n";
             accStr = accStr + "Money: " + account.getBalance().toString() + "\n";
             accStr = accStr + "History of operations: \n";

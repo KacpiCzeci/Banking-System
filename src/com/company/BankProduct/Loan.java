@@ -1,7 +1,6 @@
 package com.company.BankProduct;
 
 import com.company.Bank;
-import com.company.InterestRate;
 import com.company.Transaction.SpecificTransactions.ClosingTransaction;
 import com.company.Transaction.SpecificTransactions.PaymentTransaction;
 import com.company.Transaction.TransactionType;
@@ -43,14 +42,15 @@ public class Loan extends BankProduct {
     }
 
     public BigDecimal payLoan(){
+        BigDecimal returnMoney = null;
         ClosingTransaction closingTransaction = new ClosingTransaction(TransactionType.CLOSING, "Loan", "Regular closing");
         this.addOperationToHistory(closingTransaction);
         this.bank.addToHistory(closingTransaction);
-        Double time = (double) ChronoUnit.MONTHS.between(this.dateOfOpening, closeDate);
-//        BigDecimal returnMoney = this.withdrawMoney(this.balance).add(interestRate.calculateInterestRate("loan", this.balance, time));
-        /**Rozwiązanie tymczasowe dla testu*/
-        BigDecimal returnMoney = this.withdrawMoney(this.balance).add(BigDecimal.valueOf(2000));
-        /**--------------------------------*/
+        BigDecimal time = new BigDecimal(String.valueOf(ChronoUnit.MONTHS.between(this.dateOfOpening, closeDate)));
+        returnMoney = this.withdrawMoney(this.balance).add(interestRate.calculateInterestRate(new BigDecimal("0.03"), this.balance, time));
+//        /**Rozwiązanie tymczasowe dla testu*/
+//        BigDecimal returnMoney = this.withdrawMoney(this.balance).add(BigDecimal.valueOf(2000));
+//        /**--------------------------------*/
         this.status = BankProductStatus.CLOSED;
         return returnMoney;
     }

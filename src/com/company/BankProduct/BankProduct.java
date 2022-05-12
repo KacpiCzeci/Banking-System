@@ -1,6 +1,8 @@
 package com.company.BankProduct;
 
 import com.company.Bank;
+import com.company.InterestRate.InterestRate;
+import com.company.InterestRate.LinearInterestRate;
 import com.company.Transaction.Transaction;
 import com.company.User;
 
@@ -17,6 +19,7 @@ public abstract class BankProduct {
     protected BankProductStatus status;
     protected final LocalDateTime dateOfOpening = LocalDateTime.now();
     protected final ArrayList<Transaction> historyOfOperations = new ArrayList<>();
+    protected InterestRate interestRate = new LinearInterestRate(this);
 
     public BankProduct(String id, Bank bank, BankProductType type, User owner, BankProductStatus status){
         this.id = id;
@@ -68,6 +71,14 @@ public abstract class BankProduct {
 
     public void addOperationToHistory(Transaction transaction){
         this.historyOfOperations.add(transaction);
+    }
+
+    public void changeInterestRate(InterestRate interestRate){
+        this.interestRate = interestRate;
+    }
+
+    public BigDecimal calculateInterestRate(BigDecimal rateValue, BigDecimal time){
+        return interestRate.calculateInterestRate(rateValue, this.balance, time);
     }
 
     protected abstract void receiveMoney(BigDecimal money);

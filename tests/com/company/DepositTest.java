@@ -2,14 +2,11 @@ package com.company;
 
 import com.company.BankProduct.Account;
 import com.company.BankProduct.Deposit;
+import com.company.InterestRate.InterestRate;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DepositTest {

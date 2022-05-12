@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.InterestRate.InterestRate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

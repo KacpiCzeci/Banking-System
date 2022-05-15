@@ -4,10 +4,14 @@ import com.company.BankProduct.*;
 import com.company.BankProduct.Data.BankProductData;
 import com.company.InterBankPayment.IBPAagency;
 import com.company.InterBankPayment.InterBankPayment;
+import com.company.InterestRate.InterestRate;
+import com.company.Transaction.ConcreteCommands.*;
 import com.company.Transaction.HistoryOfOperations;
 import com.company.Transaction.SpecificTransactions.InterBankTransaction;
-import com.company.Transaction.Transaction;
+import com.company.Transaction.TransactionCommand;
+import com.company.Transaction.TransactionType;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Bank {
@@ -37,7 +41,7 @@ public class Bank {
         return users;
     }
 
-    public void addToHistory(Transaction transaction){
+    public void addToHistory(TransactionCommand transaction){
         this.historyOfOperations.addOperation(transaction);
     }
 
@@ -68,5 +72,108 @@ public class Bank {
         if(account != null && account.getStatus().equals(BankProductStatus.ACTIVE)){
             account.takePayment(transaction);
         }
+    }
+
+    public void makePayment(BankProduct from, BankProduct to, BigDecimal amount){
+        TransactionCommand transactionCommand = new PaymentCommand(TransactionType.PAYMENT, from, to, amount);
+        from.doTransaction(transactionCommand);
+        from.addOperationToHistory(transactionCommand);
+        to.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
+    }
+
+    public void makeWithdrawal(BankProduct from, BigDecimal amount){
+        TransactionCommand transactionCommand = new WithdrawalCommand(TransactionType.WITHDRAWAL, from, amount);
+        from.doTransaction(transactionCommand);
+        from.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
+    }
+
+    public void makeIncome(BankProduct to, BigDecimal amount){
+        TransactionCommand transactionCommand = new IncomeCommand(TransactionType.RECEIVE, to, amount);
+        to.doTransaction(transactionCommand);
+        to.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
+    }
+
+    public void changeInterestRate(BankProduct from, InterestRate interestRate){
+        TransactionCommand transactionCommand = new InterestRateChangeCommand(TransactionType.CHANGEOFINTERESTRATE, from, interestRate);
+        from.doTransaction(transactionCommand);
+        from.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
+    }
+
+    public void closeDeposit(Account account, String id){
+        TransactionCommand transactionCommand = new ClosingDepositCommand(TransactionType.CLOSEDEPOSIT, account, id);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        Deposit deposit = account.getDeposit(id);
+        if(deposit != null){
+            deposit.addOperationToHistory(transactionCommand);
+        }
+        this.addToHistory(transactionCommand);
+    }
+
+    public void openDeposit(Account account, String id, Integer time){
+        TransactionCommand transactionCommand = new OpenDepositCommand(TransactionType.OPENDEPOSIT, account, id, time);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        Deposit deposit = account.getDeposit(id);
+        if(deposit != null){
+            deposit.addOperationToHistory(transactionCommand);
+        }
+        this.addToHistory(transactionCommand);
+    }
+
+    public void deposeMoneyToDeposit(Account account, String id, BigDecimal amount){
+        TransactionCommand transactionCommand = new DeposeCommand(TransactionType.DEPOSE, account, id, amount);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        Deposit deposit = account.getDeposit(id);
+        if(deposit != null){
+            deposit.addOperationToHistory(transactionCommand);
+        }
+        this.addToHistory(transactionCommand);
+    }
+
+    public void takeMoneyFromLoan(Account account, String id, BigDecimal amount){
+        TransactionCommand transactionCommand = new TakeLoanCommand(TransactionType.DEPOSE, account, id, amount);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        Deposit deposit = account.getDeposit(id);
+        Loan loan = account.getLoan(id);
+        if(loan != null){
+            loan.addOperationToHistory(transactionCommand);
+        }
+        this.addToHistory(transactionCommand);
+    }
+
+    public void closeLoan(Account account, String id){
+        TransactionCommand transactionCommand = new ClosingDepositCommand(TransactionType.CLOSELOAN, account, id);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        Loan loan = account.getLoan(id);
+        if(loan != null){
+            loan.addOperationToHistory(transactionCommand);
+        }
+        this.addToHistory(transactionCommand);
+    }
+
+    public void openLoan(Account account, String id, Integer time){
+        TransactionCommand transactionCommand = new OpenDepositCommand(TransactionType.OPENLOAN, account, id, time);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        Loan loan = account.getLoan(id);
+        if(loan != null){
+            loan.addOperationToHistory(transactionCommand);
+        }
+        this.addToHistory(transactionCommand);
+    }
+
+    public void takeDebit(DebitAccount debitAccount, BigDecimal amount){
+        TransactionCommand transactionCommand = new DebitCommand(TransactionType.DEBIT, debitAccount, amount);
+        debitAccount.doTransaction(transactionCommand);
+        debitAccount.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
     }
 }

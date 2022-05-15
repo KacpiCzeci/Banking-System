@@ -3,7 +3,9 @@ package com.company.BankProduct;
 import com.company.Bank;
 import com.company.InterestRate.InterestRate;
 import com.company.InterestRate.LinearInterestRate;
+import com.company.Transaction.HistoryOfOperations;
 import com.company.Transaction.Transaction;
+import com.company.Transaction.TransactionCommand;
 import com.company.User;
 
 import java.math.BigDecimal;
@@ -18,7 +20,7 @@ public abstract class BankProduct {
     protected BigDecimal balance = new BigDecimal("0.00");
     protected BankProductStatus status;
     protected final LocalDateTime dateOfOpening = LocalDateTime.now();
-    protected final ArrayList<Transaction> historyOfOperations = new ArrayList<>();
+    protected final HistoryOfOperations historyOfOperations = new HistoryOfOperations();
     protected InterestRate interestRate = new LinearInterestRate(this);
 
     public BankProduct(String id, Bank bank, BankProductType type, User owner, BankProductStatus status){
@@ -65,12 +67,12 @@ public abstract class BankProduct {
         return dateOfOpening;
     }
 
-    public ArrayList<Transaction> getHistoryOfOperations() {
-        return historyOfOperations;
+    public ArrayList<TransactionCommand> getHistoryOfOperations() {
+        return this.historyOfOperations.getHistory();
     }
 
-    public void addOperationToHistory(Transaction transaction){
-        this.historyOfOperations.add(transaction);
+    public void addOperationToHistory(TransactionCommand transaction){
+        this.historyOfOperations.addOperation(transaction);
     }
 
     public void changeInterestRate(InterestRate interestRate){
@@ -81,8 +83,10 @@ public abstract class BankProduct {
         return interestRate.calculateInterestRate(rateValue, this.balance, time);
     }
 
-    protected abstract void receiveMoney(BigDecimal money);
+    public abstract void receiveMoney(BigDecimal money);
 
-    protected abstract BigDecimal withdrawMoney(BigDecimal money);
+    public abstract BigDecimal withdrawMoney(BigDecimal money);
+
+    public abstract void doTransaction(TransactionCommand transactionCommand);
 
 }

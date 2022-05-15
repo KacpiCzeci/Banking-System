@@ -1,9 +1,7 @@
 package com.company.BankProduct;
 
 import com.company.Bank;
-import com.company.Transaction.SpecificTransactions.ClosingTransaction;
-import com.company.Transaction.SpecificTransactions.PaymentTransaction;
-import com.company.Transaction.TransactionType;
+import com.company.Transaction.TransactionCommand;
 import com.company.User;
 
 import java.math.BigDecimal;
@@ -23,37 +21,33 @@ public class Deposit extends BankProduct {
     }
 
     @Override
-    protected void receiveMoney(BigDecimal money) {
+    public void receiveMoney(BigDecimal money) {
         this.balance = new BigDecimal(String.valueOf(this.balance.add(money)));
     }
 
     @Override
-    protected BigDecimal withdrawMoney(BigDecimal money){
+    public BigDecimal withdrawMoney(BigDecimal money){
         this.balance = new BigDecimal(String.valueOf(this.balance.subtract(money)));
         return money;
     }
 
+    @Override
+    public void doTransaction(TransactionCommand transactionCommand) {
+        transactionCommand.execute();
+    }
+
     public void depositMoney(BigDecimal amount){
-        PaymentTransaction paymentTransaction = new PaymentTransaction(TransactionType.PAYMENT, amount, this.owner.getId(), this.owner.getId());
-        this.addOperationToHistory(paymentTransaction);
-        this.bank.addToHistory(paymentTransaction);
         receiveMoney(amount);
     }
 
     public BigDecimal closeDeposit(){
         BigDecimal returnMoney = null;
-        ClosingTransaction closingTransaction = new ClosingTransaction(TransactionType.CLOSING, "Deposit", "Regular closing");
-        this.addOperationToHistory(closingTransaction);
-        this.bank.addToHistory(closingTransaction);
         if(LocalDateTime.now().isBefore(this.closeDate)){
             returnMoney = this.withdrawMoney(this.balance);
         }
         else {
             BigDecimal time = new BigDecimal(String.valueOf(ChronoUnit.MONTHS.between(this.dateOfOpening, closeDate)));
             returnMoney = this.withdrawMoney(this.balance).add(interestRate.calculateInterestRate(new BigDecimal("0.03"), this.balance, time));
-//            /**Rozwiązanie tymczasowe dla testu*/
-//            returnMoney =this.withdrawMoney(this.balance).add(BigDecimal.valueOf(100));
-//            /**--------------------------------*/
         }
         this.status = BankProductStatus.CLOSED;
         return returnMoney;

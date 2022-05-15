@@ -30,7 +30,7 @@ public class DebitAccount extends Account {
     }
 
     @Override
-    protected void receiveMoney(BigDecimal amount){
+    public void receiveMoney(BigDecimal amount){
         if(this.debit.compareTo(new BigDecimal("0.00")) > 0){
             if(this.debit.compareTo(amount) <= 0){
                 this.balance = new BigDecimal(String.valueOf(this.balance.add(amount.subtract(this.debit))));
@@ -42,17 +42,10 @@ public class DebitAccount extends Account {
         }
     }
 
-    public DebitTransaction takeDebit(BigDecimal amount){
-        if(amount.add(this.debit).compareTo(this.debitLimit) > 0){
-            return null;
-        }
-        else{
+    public void takeDebit(BigDecimal amount){
+        if(amount.add(this.debit).compareTo(this.debitLimit) <= 0){
             this.debit = new BigDecimal(String.valueOf(this.debit.add(amount)));
             this.balance = new BigDecimal(String.valueOf(this.balance.add(amount)));
-            DebitTransaction debitTransaction = new DebitTransaction(TransactionType.DEBIT, amount);
-            this.addOperationToHistory(debitTransaction);
-            this.bank.addToHistory(debitTransaction);
-            return debitTransaction;
         }
     }
 }

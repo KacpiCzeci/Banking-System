@@ -2,7 +2,6 @@ package com.company.Card;
 
 import com.company.BankProduct.Account;
 import com.company.BankProduct.BankProductStatus;
-import com.company.Transaction.SpecificTransactions.PaymentTransaction;
 import com.company.Transaction.Transaction;
 import com.company.Transaction.TransactionType;
 

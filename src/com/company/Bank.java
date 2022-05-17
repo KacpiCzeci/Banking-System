@@ -183,11 +183,4 @@ public class Bank {
         }
         this.addToHistory(transactionCommand);
     }
-
-    public void takeDebit(DebitAccount debitAccount, BigDecimal amount){
-        TransactionCommand transactionCommand = new DebitCommand(TransactionType.DEBIT, debitAccount, amount);
-        debitAccount.doTransaction(transactionCommand);
-        debitAccount.addOperationToHistory(transactionCommand);
-        this.addToHistory(transactionCommand);
-    }
 }

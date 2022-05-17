@@ -1,6 +1,5 @@
 package com.company.InterestRate;
 
-import com.company.Bank;
 import com.company.BankProduct.BankProduct;
 
 import java.math.BigDecimal;

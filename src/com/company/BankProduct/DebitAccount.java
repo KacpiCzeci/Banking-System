@@ -1,21 +1,17 @@
 package com.company.BankProduct;
 
 import com.company.Bank;
-import com.company.Transaction.SpecificTransactions.DebitTransaction;
 import com.company.Transaction.TransactionCommand;
-import com.company.Transaction.TransactionType;
-import com.company.TransferVerification.TransferVerification;
 import com.company.User;
 
 import java.math.BigDecimal;
 
-public class DebitAccount extends Account {
-    private BigDecimal debitLimit;
+public class DebitAccount extends BankProductDecorator {
+    private BigDecimal debitLimit = new BigDecimal("0.00");
     private BigDecimal debit = new BigDecimal("0.00");
 
-    public DebitAccount(String id, Bank bank, User user, TransferVerification trVr, BigDecimal debitLimit){
-        super(id, bank, user, trVr);
-        this.debitLimit = debitLimit;
+    public DebitAccount(String id, Bank bank, User owner, Account bankProduct){
+        super(id, bank, BankProductType.DEBITACCOUNT, owner, BankProductStatus.ACTIVE, bankProduct);
     }
 
     public BigDecimal getDebitLimit() {
@@ -34,24 +30,39 @@ public class DebitAccount extends Account {
     public void receiveMoney(BigDecimal amount){
         if(this.debit.compareTo(new BigDecimal("0.00")) > 0){
             if(this.debit.compareTo(amount) <= 0){
-                this.balance = new BigDecimal(String.valueOf(this.balance.add(amount.subtract(this.debit))));
+                this.bankProduct.receiveMoney(amount.subtract(this.debit));
                 this.debit = new BigDecimal("0.00");
             }
             if(this.debit.compareTo(amount) > 0){
-                this.balance = new BigDecimal(String.valueOf(this.debit.subtract(amount)));
+                this.debit = this.debit.subtract(amount);
             }
         }
     }
 
-//    @Override
-//    public void handleFailure(TransactionCommand transactionCommand) {
-//
-//    }
-
-    public void takeDebit(BigDecimal amount){
-        if(amount.add(this.debit).compareTo(this.debitLimit) <= 0){
-            this.debit = new BigDecimal(String.valueOf(this.debit.add(amount)));
-            this.balance = new BigDecimal(String.valueOf(this.balance.add(amount)));
+    @Override
+    public BigDecimal withdrawMoney(BigDecimal amount) {
+        if(this.bankProduct.getBalance().compareTo(amount) < 0){
+            BigDecimal diff = amount.subtract(this.bankProduct.getBalance());
+            if(diff.add(debit).compareTo(this.debitLimit) <= 0){
+                this.debit = this.debit.add(diff);
+                return this.bankProduct.withdrawMoney(bankProduct.getBalance());
+            }
+            else{
+                return null;
+            }
         }
+        else{
+            return this.bankProduct.withdrawMoney(amount);
+        }
+    }
+
+    @Override
+    public void doTransaction(TransactionCommand transactionCommand) {
+        transactionCommand.execute();
+    }
+
+    @Override
+    public void handleFailure(TransactionCommand transactionCommand) {
+
     }
 }

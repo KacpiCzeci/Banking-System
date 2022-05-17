@@ -1,15 +1,10 @@
 package com.company.InterBankPayment;
 
 import com.company.Bank;
-import com.company.BankProduct.Account;
-import com.company.Card.Card;
 import com.company.Transaction.ConcreteCommands.FailureCommand;
 import com.company.Transaction.ConcreteCommands.InterBankCommand;
-import com.company.Transaction.Transaction;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
-import com.company.TransferVerification.TransferVerification;
-
 import java.util.ArrayList;
 
 public class IBPAagency {

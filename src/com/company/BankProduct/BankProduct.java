@@ -4,7 +4,6 @@ import com.company.Bank;
 import com.company.InterestRate.InterestRate;
 import com.company.InterestRate.LinearInterestRate;
 import com.company.Transaction.HistoryOfOperations;
-import com.company.Transaction.Transaction;
 import com.company.Transaction.TransactionCommand;
 import com.company.User;
 

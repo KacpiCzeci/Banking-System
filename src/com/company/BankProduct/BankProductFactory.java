@@ -10,7 +10,7 @@ public class BankProductFactory {
                 return new Account(aPD.getId(), aPD.getBank(), aPD.getOwner(), aPD.getTransferVerification());
             case DEBITACCOUNT:
                 DebitAccountProductData dAPD = (DebitAccountProductData) bankProductData;
-                return new DebitAccount(dAPD.getId(), dAPD.getBank(), dAPD.getOwner(), dAPD.getTransferVerification(), dAPD.getDebitLimit());
+                return new DebitAccount(dAPD.getId(), dAPD.getBank(), dAPD.getOwner(), dAPD.getAccount());
             case DEPOSIT:
                 DepositData dD = (DepositData) bankProductData;
                 return new Deposit(dD.getId(), dD.getBank(), dD.getOwner(), dD.getCloseDate());

@@ -4,7 +4,9 @@ import com.company.*;
 import com.company.BankProduct.Data.DepositData;
 import com.company.BankProduct.Data.LoanData;
 import com.company.Card.Card;
+import com.company.Transaction.ConcreteCommands.InterBankCommand;
 import com.company.Transaction.TransactionCommand;
+import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
 
 import java.math.BigDecimal;
@@ -70,6 +72,14 @@ public class Account extends BankProduct {
     @Override
     public void doTransaction(TransactionCommand transactionCommand) {
         transactionCommand.execute();
+    }
+
+    @Override
+    public void handleFailure(TransactionCommand transactionCommand) {
+        if(transactionCommand.getType().equals(TransactionType.INTERBANKINCOME)){
+            InterBankCommand interBankCommand = (InterBankCommand) transactionCommand;
+            this.receiveMoney(interBankCommand.getAmount());
+        }
     }
 
     public void openDeposit(String id, Integer time){

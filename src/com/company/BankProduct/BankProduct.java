@@ -89,4 +89,6 @@ public abstract class BankProduct {
 
     public abstract void doTransaction(TransactionCommand transactionCommand);
 
+    public abstract void handleFailure(TransactionCommand transactionCommand);
+
 }

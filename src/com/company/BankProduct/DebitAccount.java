@@ -2,6 +2,7 @@ package com.company.BankProduct;
 
 import com.company.Bank;
 import com.company.Transaction.SpecificTransactions.DebitTransaction;
+import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
 import com.company.User;
@@ -41,6 +42,11 @@ public class DebitAccount extends Account {
             }
         }
     }
+
+//    @Override
+//    public void handleFailure(TransactionCommand transactionCommand) {
+//
+//    }
 
     public void takeDebit(BigDecimal amount){
         if(amount.add(this.debit).compareTo(this.debitLimit) <= 0){

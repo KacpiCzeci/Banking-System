@@ -36,6 +36,11 @@ public class Loan extends BankProduct {
         transactionCommand.execute();
     }
 
+    @Override
+    public void handleFailure(TransactionCommand transactionCommand) {
+
+    }
+
     public BigDecimal takeLoan(BigDecimal amount){
         this.receiveMoney(amount);
         return amount;

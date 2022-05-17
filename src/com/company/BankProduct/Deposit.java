@@ -36,6 +36,11 @@ public class Deposit extends BankProduct {
         transactionCommand.execute();
     }
 
+    @Override
+    public void handleFailure(TransactionCommand transactionCommand) {
+
+    }
+
     public void depositMoney(BigDecimal amount){
         receiveMoney(amount);
     }

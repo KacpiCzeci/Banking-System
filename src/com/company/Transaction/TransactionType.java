@@ -14,6 +14,8 @@ public enum TransactionType {
     DEPOSE,
     CHANGEOFINTERESTRATE,
     RECEIVE,
-    INTERBANK,
-    DEBIT
+    INTERBANKPAYMENT,
+    INTERBANKINCOME,
+    DEBIT,
+    FAILURE
 }

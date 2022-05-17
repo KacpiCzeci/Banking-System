@@ -3,11 +3,9 @@ package com.company;
 import com.company.BankProduct.*;
 import com.company.BankProduct.Data.BankProductData;
 import com.company.InterBankPayment.IBPAagency;
-import com.company.InterBankPayment.InterBankPayment;
 import com.company.InterestRate.InterestRate;
 import com.company.Transaction.ConcreteCommands.*;
 import com.company.Transaction.HistoryOfOperations;
-import com.company.Transaction.SpecificTransactions.InterBankTransaction;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 
@@ -63,15 +61,31 @@ public class Bank {
         users.stream().filter(u -> u.getId().equals(id)).findFirst().ifPresent(user -> user.setStatus(UserStatus.DELETED));
     }
 
-    public void makeInterBankPayments(InterBankPayment interBankPayment){
-        this.ibpaAgency.addNewInterBankPayments(interBankPayment);
+    public void makeInterBankPayments(Account account, String idBank, String idAccount, BigDecimal amount){
+        InterBankCommand transactionCommand = new InterBankCommand(TransactionType.INTERBANKPAYMENT, account,  this, idBank, idAccount, amount);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
+        this.ibpaAgency.doInterbankPayment(this, transactionCommand);
     }
 
-    public void takeInterbankPayment(InterBankTransaction transaction){
-        Account account = (Account) this.bankOrganizer.returnProduct(transaction.getReceiverID(), BankProductType.ACCOUNT);
-        if(account != null && account.getStatus().equals(BankProductStatus.ACTIVE)){
-            account.takePayment(transaction);
+    public void takeInterbankPayment(InterBankCommand interBankPayment){
+        Account receiver = (Account) this.bankOrganizer.returnProduct(interBankPayment.getReceiverId(), BankProductType.ACCOUNT);
+        if(receiver != null && receiver.getStatus().equals(BankProductStatus.ACTIVE)){
+            receiver.doTransaction(interBankPayment);
+            receiver.addOperationToHistory(interBankPayment);
+            this.addToHistory(interBankPayment);
         }
+        else{
+            FailureCommand failureCommand = new FailureCommand(TransactionType.FAILURE, interBankPayment, interBankPayment.getAccount());
+            this.ibpaAgency.doInterbankPayment(this, failureCommand);
+        }
+    }
+
+    public void takeFailure(FailureCommand failureCommand){
+        failureCommand.getReceiver().doTransaction(failureCommand);
+        failureCommand.getReceiver().addOperationToHistory(failureCommand);
+        this.addToHistory(failureCommand);
     }
 
     public void makePayment(BankProduct from, BankProduct to, BigDecimal amount){

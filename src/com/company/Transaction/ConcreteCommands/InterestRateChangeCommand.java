@@ -2,6 +2,7 @@ package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.BankProduct;
 import com.company.InterestRate.InterestRate;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
@@ -49,5 +50,10 @@ public class InterestRateChangeCommand implements TransactionCommand {
     @Override
     public void createDescription() {
         this.description =  "Changed interest rates to " + this.type.name() + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

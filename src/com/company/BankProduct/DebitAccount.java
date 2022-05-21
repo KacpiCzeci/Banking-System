@@ -1,6 +1,7 @@
 package com.company.BankProduct;
 
 import com.company.Bank;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.User;
 
@@ -64,5 +65,10 @@ public class DebitAccount extends BankProductDecorator {
     @Override
     public void handleFailure(TransactionCommand transactionCommand) {
 
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitBankProduct(this);
     }
 }

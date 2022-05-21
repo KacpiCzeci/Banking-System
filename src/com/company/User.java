@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.Report.ReportVisitor;
+
 public class User {
     private final String id;
     private UserStatus status = UserStatus.ACTIVE;
@@ -24,5 +26,9 @@ public class User {
 
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitUser(this);
     }
 }

@@ -1,6 +1,7 @@
 package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.Account;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
@@ -49,5 +50,10 @@ public class OpenDepositCommand implements TransactionCommand {
     @Override
     public void createDescription() {
         this.description =  "Open Deposit " + this.account.getDeposit(this.id).getId() + " to account " + account.getId() + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

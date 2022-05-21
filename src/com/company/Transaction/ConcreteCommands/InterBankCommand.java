@@ -2,6 +2,7 @@ package com.company.Transaction.ConcreteCommands;
 
 import com.company.Bank;
 import com.company.BankProduct.Account;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 
@@ -79,5 +80,10 @@ public class InterBankCommand implements TransactionCommand {
     @Override
     public void createDescription() {
         this.description = "InterBankPayment from " + this.senderBank.getId() + " to " + this.receiverBank + " in amount of " + this.amount + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

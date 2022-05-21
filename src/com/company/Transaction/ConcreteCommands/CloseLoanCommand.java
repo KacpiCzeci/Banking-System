@@ -1,6 +1,7 @@
 package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.Account;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
@@ -47,5 +48,10 @@ public class CloseLoanCommand implements TransactionCommand {
     @Override
     public void createDescription() {
         this.description =  "Closed Loan " + this.account.getLoan(this.id).getId() + " of account " + account.getId() + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

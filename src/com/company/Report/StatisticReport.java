@@ -1,35 +1,71 @@
 package com.company.Report;
 
 import com.company.BankProduct.Account;
+import com.company.BankProduct.BankProduct;
+import com.company.Report.IntermediateData.StatisticData;
 import com.company.Transaction.CashTransaction;
 import com.company.Transaction.Transaction;
+import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
+import com.company.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class StatisticReport extends Report{
-    public StatisticReport(){
-        super(ReportType.STATISTIC);
+public class StatisticReport implements ReportVisitor{
+    private ReportType type;
+    private String content = "";
+    private LocalDateTime generated = null;
+    private Integer user = 0;
+    private BigDecimal balance = new BigDecimal("0.00");
+    private Integer transactionAmount = 0;
+    private Integer accountAmount = 0;
+
+    public StatisticReport(ReportType type) {
+        this.type = type;
     }
+
     @Override
-    public void generateRaport(ArrayList<Account> accounts) {
-        StringBuilder content = new StringBuilder(new String(""));
-        for (Account account: accounts) {
-            String accStr = new String("=======================================\n");
-            accStr = accStr + "Account: " + account.getId().toString() + "\n";
-            accStr = accStr + "Owner: " + account.getOwner().toString() + "\n";
-            accStr = accStr + "Money: " + account.getBalance().toString() + "\n";
-            accStr = accStr + "Total number of operations: " + account.getHistoryOfOperations().size() + "\n";
-            accStr = accStr + "Total money received: " + account.getHistoryOfOperations().stream()
-                    .filter(tran -> tran.getType().equals(TransactionType.RECEIVE)).map(tran -> ((CashTransaction)tran).getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add) + "\n";
-            accStr = accStr + "Total money spend: " + account.getHistoryOfOperations().stream()
-                    .filter(tran -> tran.getType().equals(TransactionType.PAYMENT)).map(tran -> ((CashTransaction)tran).getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add) + "\n";
-            accStr = accStr + "=======================================\n";
-            content.append(accStr);
-        }
-        this.content = content.toString();
+    public void generateReport() {
+        String content = "";
+        content = content + "=======================================\n";
+        content = content + "Total amount of users: " + this.user.toString() + "\n";
+        content = content + "Total balance: " + this.balance.toString() + "\n";
+        content = content + "Total number of operations: " + this.transactionAmount.toString() + "\n";
+        content = content + "Total number of bank products: " + this.accountAmount.toString() + "\n";
+        this.content = content;
         this.generated = LocalDateTime.now();
+    }
+
+    @Override
+    public ReportType getType() {
+        return this.type;
+    }
+
+    @Override
+    public String getContent() {
+        return this.content;
+    }
+
+    @Override
+    public LocalDateTime getGenerated() {
+        return this.generated;
+    }
+
+    @Override
+    public void visitBankProduct(BankProduct bankProduct) {
+        this.accountAmount++;
+        this.balance = this.balance.add(bankProduct.getBalance());
+    }
+
+    @Override
+    public void visitTransaction(TransactionCommand transactionCommand) {
+        this.transactionAmount++;
+    }
+
+    @Override
+    public void visitUser(User user) {
+        this.user++;
     }
 }

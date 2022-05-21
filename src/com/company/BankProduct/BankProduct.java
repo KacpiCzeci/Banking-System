@@ -3,6 +3,7 @@ package com.company.BankProduct;
 import com.company.Bank;
 import com.company.InterestRate.InterestRate;
 import com.company.InterestRate.LinearInterestRate;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.HistoryOfOperations;
 import com.company.Transaction.TransactionCommand;
 import com.company.User;
@@ -89,5 +90,7 @@ public abstract class BankProduct {
     public abstract void doTransaction(TransactionCommand transactionCommand);
 
     public abstract void handleFailure(TransactionCommand transactionCommand);
+
+    public abstract void acceptVisitor(ReportVisitor reportVisitor);
 
 }

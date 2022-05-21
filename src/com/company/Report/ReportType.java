@@ -1,6 +1,7 @@
 package com.company.Report;
 
 public enum ReportType {
-    PAYMENT,
-    STATISTIC
+    USERPAYMENT,
+    STATISTIC,
+    USERBANKPRODUCT
 }

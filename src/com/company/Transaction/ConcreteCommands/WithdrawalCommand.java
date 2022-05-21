@@ -1,6 +1,7 @@
 package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.BankProduct;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
@@ -48,5 +49,10 @@ public class WithdrawalCommand implements TransactionCommand {
     @Override
     public void createDescription() {
         this.description =  "Withdrawal in amount of " + this.amount + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

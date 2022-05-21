@@ -2,6 +2,7 @@ package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.Account;
 import com.company.BankProduct.BankProduct;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
@@ -39,6 +40,7 @@ public class PaymentCommand implements TransactionCommand {
         return description;
     }
 
+
     @Override
     public void execute() {
         TransferVerification transferVerification = new TransferVerification();
@@ -52,5 +54,10 @@ public class PaymentCommand implements TransactionCommand {
     @Override
     public void createDescription(){
         this.description = "Payment from " + this.sender.getId() + " to " + this.receiver.getId() + " in amount of " + this.amount + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

@@ -4,6 +4,7 @@ import com.company.*;
 import com.company.BankProduct.Data.DepositData;
 import com.company.BankProduct.Data.LoanData;
 import com.company.Card.Card;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.ConcreteCommands.InterBankCommand;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
@@ -80,6 +81,11 @@ public class Account extends BankProduct {
             InterBankCommand interBankCommand = (InterBankCommand) transactionCommand;
             this.receiveMoney(interBankCommand.getAmount());
         }
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitBankProduct(this);
     }
 
     public void openDeposit(String id, Integer time){

@@ -2,7 +2,7 @@ package com.company;
 
 import com.company.BankProduct.Account;
 import com.company.InterBankPayment.IBPAagency;
-import com.company.Report.PaymentReport;
+import com.company.Report.UserPaymentReport;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReportTests {
 
-    private PaymentReport paymentReport = new PaymentReport();
+    private UserPaymentReport paymentReport = new UserPaymentReport();
     private ArrayList<Account> accountTestList = new ArrayList<>();
 
     @Mock private Account account1;
@@ -43,7 +43,7 @@ class ReportTests {
     }
     @Test
     public void checkIfGenerateReportAboutAccountsIsRunOneTime() {
-        PaymentReport paymentReportMock=mock(PaymentReport.class);
+        UserPaymentReport paymentReportMock=mock(UserPaymentReport.class);
         paymentReportMock.generateRaport(accountTestList);
         verify(paymentReportMock, times(1)).generateRaport(accountTestList);
     }

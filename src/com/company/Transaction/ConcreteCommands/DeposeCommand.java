@@ -2,6 +2,7 @@ package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.Account;
 import com.company.BankProduct.BankProduct;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
@@ -51,5 +52,10 @@ public class DeposeCommand implements TransactionCommand {
     @Override
     public void createDescription() {
         this.description =  "Deposed money to " + this.id + " in amount of " + this.amount + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

@@ -17,5 +17,8 @@ public enum TransactionType {
     INTERBANKPAYMENT,
     INTERBANKINCOME,
     DEBIT,
-    FAILURE
+    FAILURE,
+    ADDCARD,
+    REMOVECARD,
+    USECARD
 }

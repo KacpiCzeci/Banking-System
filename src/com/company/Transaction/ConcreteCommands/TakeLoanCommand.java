@@ -41,11 +41,8 @@ public class TakeLoanCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            account.takeMoneyFromLoan(this.id, this.amount);
-            this.createDescription();
-        }
+        account.takeMoneyFromLoan(this.id, this.amount);
+        this.createDescription();
     }
 
     @Override

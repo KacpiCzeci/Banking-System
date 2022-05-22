@@ -42,11 +42,8 @@ public class DeposeCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            account.deposeMoneyToDeposit(this.id, this.amount);
-            this.createDescription();
-        }
+        account.deposeMoneyToDeposit(this.id, this.amount);
+        this.createDescription();
     }
 
     @Override

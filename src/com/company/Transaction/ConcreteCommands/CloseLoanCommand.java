@@ -38,11 +38,8 @@ public class CloseLoanCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            this.account.closeLoan(this.id);
-            this.createDescription();
-        }
+        this.account.closeLoan(this.id);
+        this.createDescription();
     }
 
     @Override

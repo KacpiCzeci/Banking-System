@@ -3,9 +3,7 @@ package com.company.Card;
 import com.company.BankProduct.Account;
 import com.company.BankProduct.BankProductStatus;
 import com.company.Transaction.Transaction;
-import com.company.Transaction.TransactionType;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -61,11 +59,5 @@ public class Card {
 
     public void setStatus(BankProductStatus status) {
         this.status = status;
-    }
-
-    public void payByCard(String receiverID, BigDecimal amount){
-        PaymentTransaction paymentTransaction = new PaymentTransaction(TransactionType.PAYMENT, amount, this.myAccount.getId(), receiverID);
-        this.historyOfOperations.add(paymentTransaction);
-        this.myAccount.getBank().addToHistory(paymentTransaction);
     }
 }

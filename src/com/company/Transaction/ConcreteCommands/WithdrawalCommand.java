@@ -39,11 +39,8 @@ public class WithdrawalCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            this.sender.withdrawMoney(amount);
-            this.createDescription();
-        }
+        this.sender.withdrawMoney(amount);
+        this.createDescription();
     }
 
     @Override

@@ -1,27 +1,26 @@
 package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.Account;
-import com.company.BankProduct.BankProduct;
 import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
-import com.company.TransferVerification.TransferVerification;
 
+import javax.swing.plaf.basic.BasicIconFactory;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class PaymentCommand implements TransactionCommand {
+public class UseCardCommand implements TransactionCommand {
     private final TransactionType type;
     private final LocalDateTime dateOfTransaction = LocalDateTime.now();
     private String description = "";
-    private final BankProduct sender;
-    private final BankProduct receiver;
+    private final Account account;
+    private final Long number;
     private final BigDecimal amount;
 
-    public PaymentCommand(TransactionType type, BankProduct sender, BankProduct receiver, BigDecimal amount){
+    public UseCardCommand(TransactionType type, Account account, Long number, BigDecimal amount) {
         this.type = type;
-        this.sender = sender;
-        this.receiver = receiver;
+        this.account = account;
+        this.number = number;
         this.amount = amount;
     }
 
@@ -40,17 +39,15 @@ public class PaymentCommand implements TransactionCommand {
         return description;
     }
 
-
     @Override
     public void execute() {
-        this.sender.withdrawMoney(amount);
-        this.receiver.receiveMoney(amount);
+        this.account.useCardPayment(this.number, this.amount);
         this.createDescription();
     }
 
     @Override
-    public void createDescription(){
-        this.description = "Payment from " + this.sender.getId() + " to " + this.receiver.getId() + " in amount of " + this.amount + ".";
+    public void createDescription() {
+        this.description =  "Paid by card " + this.number + " in amount of " + this.amount.toString() + ".";
     }
 
     @Override

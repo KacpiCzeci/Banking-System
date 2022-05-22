@@ -39,11 +39,8 @@ public class IncomeCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            this.receiver.receiveMoney(amount);
-            this.createDescription();
-        }
+        this.receiver.receiveMoney(amount);
+        this.createDescription();
     }
 
     @Override

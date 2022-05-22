@@ -2,27 +2,31 @@ package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.Account;
 import com.company.BankProduct.BankProduct;
+import com.company.Card.Card;
 import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
-import com.company.TransferVerification.TransferVerification;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class PaymentCommand implements TransactionCommand {
+public class AddCardCommand implements TransactionCommand {
     private final TransactionType type;
     private final LocalDateTime dateOfTransaction = LocalDateTime.now();
     private String description = "";
-    private final BankProduct sender;
-    private final BankProduct receiver;
-    private final BigDecimal amount;
+    private final Account account;
+    private final String id;
+    private final Long number;
+    private final Integer cvc;
+    private final LocalDateTime expDate;
 
-    public PaymentCommand(TransactionType type, BankProduct sender, BankProduct receiver, BigDecimal amount){
+    public AddCardCommand(TransactionType type, Account account, String id, Long number, Integer cvc, LocalDateTime expDate){
         this.type = type;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.amount = amount;
+        this.account = account;
+        this.id = id;
+        this.number = number;
+        this.cvc = cvc;
+        this.expDate = expDate;
     }
 
     @Override
@@ -40,17 +44,15 @@ public class PaymentCommand implements TransactionCommand {
         return description;
     }
 
-
     @Override
     public void execute() {
-        this.sender.withdrawMoney(amount);
-        this.receiver.receiveMoney(amount);
+        this.account.addCard(this.id, this.number, this.cvc, this.expDate);
         this.createDescription();
     }
 
     @Override
-    public void createDescription(){
-        this.description = "Payment from " + this.sender.getId() + " to " + this.receiver.getId() + " in amount of " + this.amount + ".";
+    public void createDescription() {
+        this.description =  "Added new card " + this.number + ".";
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Bank {
@@ -181,6 +182,27 @@ public class Bank {
         if(loan != null){
             loan.addOperationToHistory(transactionCommand);
         }
+        this.addToHistory(transactionCommand);
+    }
+
+    public void addCard(Account account, String id, Long number, Integer cvc, LocalDateTime expDate){
+        TransactionCommand transactionCommand = new AddCardCommand(TransactionType.ADDCARD, account, id, number, cvc, expDate);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
+    }
+
+    public void removeCard(Account account, Long number){
+        TransactionCommand transactionCommand = new RemoveCard(TransactionType.REMOVECARD, account, number);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
+        this.addToHistory(transactionCommand);
+    }
+
+    public void useCard(Account account, Long number){
+        TransactionCommand transactionCommand = new RemoveCard(TransactionType.USECARD, account, number);
+        account.doTransaction(transactionCommand);
+        account.addOperationToHistory(transactionCommand);
         this.addToHistory(transactionCommand);
     }
 }

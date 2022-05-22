@@ -40,11 +40,8 @@ public class InterestRateChangeCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            this.receiver.changeInterestRate(interestRate);
-            this.createDescription();
-        }
+        this.receiver.changeInterestRate(interestRate);
+        this.createDescription();
     }
 
     @Override

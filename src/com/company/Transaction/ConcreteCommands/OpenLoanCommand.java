@@ -40,11 +40,8 @@ public class OpenLoanCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            this.account.openLoan(this.id, this.time);
-            this.createDescription();
-        }
+        this.account.openLoan(this.id, this.time);
+        this.createDescription();
     }
 
     @Override

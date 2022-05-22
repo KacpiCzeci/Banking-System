@@ -1,6 +1,7 @@
 package com.company.Transaction.ConcreteCommands;
 
 import com.company.BankProduct.Account;
+import com.company.Report.ReportVisitor;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
@@ -37,15 +38,17 @@ public class ClosingDepositCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            this.account.closeDeposit(this.id);
-            this.createDescription();
-        }
+        this.account.closeDeposit(this.id);
+        this.createDescription();
     }
 
     @Override
     public void createDescription() {
         this.description =  "Closed Deposit " + this.account.getDeposit(this.id).getId() + " of account " + account.getId() + ".";
+    }
+
+    @Override
+    public void acceptVisitor(ReportVisitor reportVisitor) {
+        reportVisitor.visitTransaction(this);
     }
 }

@@ -40,11 +40,8 @@ public class OpenDepositCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        TransferVerification transferVerification = new TransferVerification();
-        if(transferVerification.verify(this)){
-            this.account.openDeposit(this.id, this.time);
-            this.createDescription();
-        }
+        this.account.openDeposit(this.id, this.time);
+        this.createDescription();
     }
 
     @Override

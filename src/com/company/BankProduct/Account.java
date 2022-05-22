@@ -128,26 +128,19 @@ public class Account extends BankProduct {
             this.withdrawMoney(loan.payLoan());
         }
     }
-//
-//    public void addCard(String id, Long number, Integer cvc, LocalDateTime expDate){
-//        this.cards.add(new Card(id, this, number, cvc, expDate));
-//    }
-//
-//    public void removeCard(String id){
-//        Card card = this.cards.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-//        if(card != null){
-//            card.setStatus(BankProductStatus.CLOSED);
-//        }
-//    }
-//
-//    public void useCardPayment(String cardID, String receiveID, BigDecimal amount){
-//        Card card = this.cards.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-//        if(card != null && card.getStatus().equals(BankProductStatus.ACTIVE) && this.balance.compareTo(amount) >= 0){
-//            PaymentTransaction paymentTransaction = new PaymentTransaction(TransactionType.PAYMENT, amount, this.id, receiveID);
-//            this.addOperationToHistory(paymentTransaction);
-//            this.bank.addToHistory(paymentTransaction);
-//            card.payByCard(receiveID, amount);
-//            this.withdrawMoney(amount);
-//        }
-//    }
+
+    public void addCard(String id, Long number, Integer cvc, LocalDateTime expDate){
+        this.cards.add(new Card(id, this, number, cvc, expDate));
+    }
+
+    public void removeCard(Long id){
+        this.cards.stream().filter(product -> product.getNumber().equals(id)).findFirst().ifPresent(card -> card.setStatus(BankProductStatus.CLOSED));
+    }
+
+    public void useCardPayment(Long number, BigDecimal amount){
+        Card card = this.cards.stream().filter(product -> product.getNumber().equals(number)).findFirst().orElse(null);
+        if(card != null && card.getStatus().equals(BankProductStatus.ACTIVE) && this.balance.compareTo(amount) >= 0){
+            this.withdrawMoney(amount);
+        }
+    }
 }

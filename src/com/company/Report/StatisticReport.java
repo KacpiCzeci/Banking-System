@@ -1,17 +1,11 @@
 package com.company.Report;
 
-import com.company.BankProduct.Account;
 import com.company.BankProduct.BankProduct;
-import com.company.Report.IntermediateData.StatisticData;
-import com.company.Transaction.CashTransaction;
-import com.company.Transaction.Transaction;
 import com.company.Transaction.TransactionCommand;
-import com.company.Transaction.TransactionType;
 import com.company.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class StatisticReport implements ReportVisitor{
     private ReportType type;

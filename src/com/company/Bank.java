@@ -20,7 +20,7 @@ public class Bank {
     private final IBPAagency ibpaAgency;
     private final ArrayList<User> users = new ArrayList<>();
     private final HistoryOfOperations historyOfOperations = new HistoryOfOperations();
-    private final BankProductFactory bankProductFactory = new BankProductFactory();
+    private final BankProductCreator bankProductCreator = new BankProductCreator();
 
     public Bank(String id, String name, IBPAagency ibpaAgency){
         this.id = id;
@@ -45,7 +45,7 @@ public class Bank {
     }
 
     public BankProduct createBankProduct(BankProductType type, BankProductData bankProductData){
-        BankProduct bankProduct = bankProductFactory.create(type, bankProductData);
+        BankProduct bankProduct = bankProductCreator.create(type, bankProductData);
         this.bankOrganizer.addBankProduct(bankProduct);
         return bankProduct;
     }

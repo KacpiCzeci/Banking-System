@@ -7,6 +7,8 @@ import com.company.BankProduct.BankProductType;
 import com.company.BankProduct.Data.AccountProductData;
 import com.company.BankProduct.Data.BankProductData;
 import com.company.InterBankPayment.IBPAagency;
+import com.company.Transaction.ConcreteCommands.InterBankCommand;
+import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,11 +17,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class BankTest {
 
@@ -32,6 +37,7 @@ class BankTest {
     @Mock public User _userMOCK;
     @Mock BankProductData bankProductDataMOCK;
     @Mock TransferVerification transferVerificationMOCK;
+    @Mock InterBankCommand transactionCommandMOCK;
 
     @BeforeEach
     public void setUp(){
@@ -113,6 +119,7 @@ class BankTest {
         BankProductType bankProductType= BankProductType.ACCOUNT;
         User  userLOCAL =new User("1234567890",bank);
         AccountProductData accountProductData= new AccountProductData("0",bank,bankProductType,userLOCAL,transferVerificationMOCK);
+        bank.createBankProduct(bankProductType,accountProductData);
         //when
         BankProduct returnedProduct=bank.getBankProduct("0",bankProductType);
         //then
@@ -135,6 +142,20 @@ class BankTest {
     /**
      * InterBankPayments
      */
+    @Test
+    public void MakeInterBankPayments(){
+        //given
+//        Bank bankMock =mock(Bank.class);
+//        BankProductType bankProductType= BankProductType.ACCOUNT;
+//        AccountProductData accountProductData= new AccountProductData("0",bankMock,bankProductType,_userMOCK,transferVerificationMOCK);
+//        Account returnedProductBankMock=mock(Account.class);
+//        //when
+//        bankMock.makeInterBankPayments(returnedProductBankMock,bankMock.getId(),"0",new BigDecimal(0.1d));
+////        InterBankCommand transactionCommand = new InterBankCommand(TransactionType.INTERBANKPAYMENT, returnedProductBankMock,  this, idBank, idAccount, amount);
+//        //then
+//        verify(returnedProductBankMock, times(1)).doTransaction(transactionCommandMOCK);
+
+    }
     @AfterEach
     public void clearData(){
 //        bank = null;

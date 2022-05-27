@@ -1,8 +1,14 @@
 package com.company;
 
 import com.company.BankProduct.Account;
+import com.company.BankProduct.BankProduct;
+import com.company.BankProduct.BankProductType;
+import com.company.BankProduct.Data.AccountProductData;
 import com.company.InterBankPayment.IBPAagency;
+import com.company.Report.ReportType;
+import com.company.Report.UserBankProductReport;
 import com.company.Report.UserPaymentReport;
+import com.company.TransferVerification.TransferVerification;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,40 +23,25 @@ import static org.mockito.Mockito.*;
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ReportTests {
 
-//    private UserPaymentReport paymentReport = new UserPaymentReport();
-//    private ArrayList<Account> accountTestList = new ArrayList<>();
-//
-//    @Mock private Account account1;
-//    @Mock private Account account2;
-//    @Mock private IBPAagency ibpaAgency;
-//
-//
-//
-//    @BeforeEach
-//    public void setAccountsList() {
 
-//        MockitoAnnotations.initMocks(this);
-//
-//        accountTestList.add(account1);
-//        accountTestList.add(account2);
-//
+    @BeforeEach
+    public void setAccountsList() {
+
+        MockitoAnnotations.initMocks(this);
+
 //        when(account1.getId()).thenReturn("1");
-//        when(account1.getOwner()).thenReturn(new User("1-9",new Bank("1","bank1",ibpaAgency)));
+//        when(account1.getOwner()).thenReturn(new User("1-9",new Bank("1","bank1",ibpaAgencyMOCK)));
 //        when(account1.getBalance()).thenReturn(BigDecimal.valueOf(111.0));
 //        when(account2.getId()).thenReturn("2");
-//        when(account2.getOwner()).thenReturn(new User("2-9",new Bank("1","bank1",ibpaAgency)));
+//        when(account2.getOwner()).thenReturn(new User("2-9",new Bank("1","bank1",ibpaAgencyMOCK)));
 //        when(account2.getBalance()).thenReturn(BigDecimal.valueOf(222.0));
 //    }
-//    @Test
-//    public void checkIfGenerateReportAboutAccountsIsRunOneTime() {
-//        UserPaymentReport paymentReportMock=mock(UserPaymentReport.class);
-//        paymentReportMock.generateRaport(accountTestList);
-//        verify(paymentReportMock, times(1)).generateRaport(accountTestList);
-//    }
-//    @Test
-//    public void seeReport()
-//    {
-//        paymentReport.generateRaport(accountTestList);
+    }
+
+    @Test
+    public void seeReport()
+    {
+//        bankProductReport.generateReport();
 //        String expected="=======================================\n" +
 //                "Account: 1\n" +
 //                "Owner: "+account1.getOwner().toString()+"\n" +
@@ -63,10 +54,12 @@ class ReportTests {
 //                "Money: 222.0\n" +
 //                "History of operations: \n" +
 //                "=======================================\n";
-////        System.out.println(paymentReport.getContent());
-////        System.out.println(s);
+//
+
+
+//        System.out.println(s);
 //        String actual=paymentReport.getContent();
 //        assertEquals(expected,actual);
-//    }
+    }
 
 }

@@ -21,7 +21,7 @@ class LoanTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
 
-        when(interestRate.calculateInterestRate("loan", 1345.76, 7.0)).thenReturn(942.03);
+//        when(interestRate.calculateInterestRate("loan", 1345.76, 7.0)).thenReturn(942.03);
     }
 
 //    @Test

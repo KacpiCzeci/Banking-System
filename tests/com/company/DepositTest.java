@@ -19,7 +19,7 @@ class DepositTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
 
-        when(interestRate.calculateInterestRate("deposit", 1000.0, 1.0)).thenReturn(1071.03);
+//        when(interestRate.calculateInterestRate("deposit", 1000.0, 1.0)).thenReturn(1071.03);
     }
 
 //    @Test

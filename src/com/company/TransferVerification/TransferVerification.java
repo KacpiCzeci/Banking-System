@@ -1,15 +1,10 @@
 package com.company.TransferVerification;
 
-import com.company.Bank;
-import com.company.BankProduct.Account;
-import com.company.Card.Card;
-import com.company.Transaction.Transaction;
-
-import java.util.ArrayList;
+import com.company.Transaction.TransactionCommand;
 
 public interface TransferVerification {
 
-    public Boolean verifyTransaction(Transaction transaction);
+    public Boolean verifyTransaction(TransactionCommand transaction);
 //    {
 //        if(!this.bankVerification(transaction.getSender().getMyBank())){
 //            return false;
@@ -32,41 +27,41 @@ public interface TransferVerification {
 //        return true;
 //    }
 
-    public Boolean cardVerification(Card card, Account account);
-//    {
-//        for (Card c: account.getCards()) {
-//            if(c.equals(card) && c.getNumber().equals(card.getNumber())){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-    public Boolean bankVerification(Bank bank);
-//    {
-//        for (Bank b: banks) {
-//           if(b.equals(bank) && b.getId().equals(bank.getId())){
-//               return true;
-//           }
-//        }
-//        return false;
-//    }
-
-    public Boolean accountVerification(Account account, Bank bank);
-//    {
-//        for (Account a: bank.getAccounts()) {
-//            if(a.equals(account) && a.getId().equals(account.getId())){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-    public Boolean moneyVerification(Double amount, Account account);
-//    {
-//        if(amount >= account.getTotalMoney()){
-//            return true;
-//        }
-//        return false;
-//    }
+//    public Boolean cardVerification(Card card, Account account);
+////    {
+////        for (Card c: account.getCards()) {
+////            if(c.equals(card) && c.getNumber().equals(card.getNumber())){
+////                return true;
+////            }
+////        }
+////        return false;
+////    }
+//
+//    public Boolean bankVerification(Bank bank);
+////    {
+////        for (Bank b: banks) {
+////           if(b.equals(bank) && b.getId().equals(bank.getId())){
+////               return true;
+////           }
+////        }
+////        return false;
+////    }
+//
+//    public Boolean accountVerification(Account account, Bank bank);
+////    {
+////        for (Account a: bank.getAccounts()) {
+////            if(a.equals(account) && a.getId().equals(account.getId())){
+////                return true;
+////            }
+////        }
+////        return false;
+////    }
+//
+//    public Boolean moneyVerification(Double amount, Account account);
+////    {
+////        if(amount >= account.getTotalMoney()){
+////            return true;
+////        }
+////        return false;
+////    }
 }

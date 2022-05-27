@@ -8,6 +8,8 @@ import com.company.Transaction.ConcreteCommands.*;
 import com.company.Transaction.HistoryOfOperations;
 import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
+import com.company.TransferVerification.TransferVerification;
+import com.company.TransferVerification.TransferVerificationCreator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ public class Bank {
     private final ArrayList<User> users = new ArrayList<>();
     private final HistoryOfOperations historyOfOperations = new HistoryOfOperations();
     private final BankProductCreator bankProductCreator = new BankProductCreator();
+    private final TransferVerificationCreator transferVerificationCreator = new TransferVerificationCreator(this);
 
     public Bank(String id, String name, IBPAagency ibpaAgency){
         this.id = id;
@@ -51,7 +54,11 @@ public class Bank {
     }
 
     public void deleteBankProduct(String id, BankProductType type){
-        bankOrganizer.deleteProduct(id, type);
+        this.bankOrganizer.deleteProduct(id, type);
+    }
+
+    public BankProduct getBankProduct(String id, BankProductType type){
+        return this.bankOrganizer.returnProduct(id, type);
     }
 
     public void createUser(String id){
@@ -91,17 +98,29 @@ public class Bank {
 
     public void makePayment(BankProduct from, BankProduct to, BigDecimal amount){
         TransactionCommand transactionCommand = new PaymentCommand(TransactionType.PAYMENT, from, to, amount);
-        from.doTransaction(transactionCommand);
-        from.addOperationToHistory(transactionCommand);
-        to.addOperationToHistory(transactionCommand);
-        this.addToHistory(transactionCommand);
+        TransferVerification transferVerification = this.transferVerificationCreator.create(TransactionType.PAYMENT);
+        if(transferVerification.verifyTransaction(transactionCommand)){
+            from.doTransaction(transactionCommand);
+            from.addOperationToHistory(transactionCommand);
+            to.addOperationToHistory(transactionCommand);
+            this.addToHistory(transactionCommand);
+        }
+        else{
+            this.takeFailure(new FailureCommand(TransactionType.FAILURE, transactionCommand, from));
+        }
     }
 
     public void makeWithdrawal(BankProduct from, BigDecimal amount){
         TransactionCommand transactionCommand = new WithdrawalCommand(TransactionType.WITHDRAWAL, from, amount);
-        from.doTransaction(transactionCommand);
-        from.addOperationToHistory(transactionCommand);
-        this.addToHistory(transactionCommand);
+        TransferVerification transferVerification = this.transferVerificationCreator.create(TransactionType.WITHDRAWAL);
+        if(transferVerification.verifyTransaction(transactionCommand)){
+            from.doTransaction(transactionCommand);
+            from.addOperationToHistory(transactionCommand);
+            this.addToHistory(transactionCommand);
+        }
+        else {
+            this.takeFailure(new FailureCommand(TransactionType.FAILURE, transactionCommand, from));
+        }
     }
 
     public void makeIncome(BankProduct to, BigDecimal amount){

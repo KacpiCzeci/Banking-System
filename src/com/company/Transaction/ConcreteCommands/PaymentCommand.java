@@ -57,4 +57,16 @@ public class PaymentCommand implements TransactionCommand {
     public void acceptVisitor(ReportVisitor reportVisitor) {
         reportVisitor.visitTransaction(this);
     }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public BankProduct getReceiver() {
+        return receiver;
+    }
+
+    public BankProduct getSender() {
+        return sender;
+    }
 }

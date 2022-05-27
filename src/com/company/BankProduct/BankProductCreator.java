@@ -2,8 +2,7 @@ package com.company.BankProduct;
 
 import com.company.BankProduct.Data.*;
 
-public class BankProductCreator implements ProductCreator {
-    @Override
+public class BankProductCreator {
     public BankProduct create(BankProductType type, BankProductData bankProductData){
         switch (type){
             case ACCOUNT:

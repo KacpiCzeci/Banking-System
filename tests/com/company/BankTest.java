@@ -1,15 +1,19 @@
 package com.company;
 
 import com.company.BankProduct.Account;
+import com.company.BankProduct.BankProduct;
 import com.company.BankProduct.BankProductType;
+import com.company.BankProduct.Data.AccountProductData;
 import com.company.BankProduct.Data.BankProductData;
 import com.company.InterBankPayment.IBPAagency;
+import com.company.TransferVerification.TransferVerification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
+import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -26,6 +30,7 @@ class BankTest {
     @Mock public IBPAagency _ibpaAgencyMOCK;
     @Mock public User _userMOCK;
     @Mock BankProductData bankProductDataMOCK;
+    @Mock TransferVerification transferVerificationMOCK;
 
     @BeforeEach
     public void setUp(){
@@ -80,14 +85,27 @@ class BankTest {
      */
 
     @Test
-    public void CheckIfProductIsCretedByCreateBankProductMethod(){
+    public void CheckIfProductIsCretedByCreateBankProductMethodIsRunning(){
+        //given
+        Bank bankMock =mock(Bank.class);
+        BankProductType bankProductType= BankProductType.ACCOUNT;
+        AccountProductData accountProductData= new AccountProductData("0",bankMock,bankProductType,_userMOCK,transferVerificationMOCK);
+        //when
+        bankMock.createBankProduct(bankProductType,accountProductData);
+        //then
+        verify(bankMock, times(1)).createBankProduct(bankProductType,accountProductData);
+    }
+
+    @Test
+    public void CheckCretedProduct(){
         //given
         BankProductType bankProductType= BankProductType.ACCOUNT;
-        User user=new User("2",bank);
-        bank.createBankProduct(bankProductType, )
+        User  userLOCAL =new User("1234567890",bank);
+        AccountProductData accountProductData= new AccountProductData("0",bank,bankProductType,userLOCAL,transferVerificationMOCK);
         //when
-        System.out.println(bank.createBankProduct(bankProductType, bankProductDataMOCK).toString());
-
+        BankProduct returnedProduct=bank.createBankProduct(bankProductType,accountProductData);
+        //then
+        assertArrayEquals(new Object[]{returnedProduct.getType(),returnedProduct.getId(),returnedProduct.getBank(),returnedProduct.getOwner()},new Object[]{bankProductType,"0",bank,userLOCAL});
     }
     @Test
     public void CheckIfBankAccoutIsDelete(){

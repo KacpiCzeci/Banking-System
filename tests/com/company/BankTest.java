@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.BankProduct.Account;
 import com.company.BankProduct.BankProduct;
+import com.company.BankProduct.BankProductStatus;
 import com.company.BankProduct.BankProductType;
 import com.company.BankProduct.Data.AccountProductData;
 import com.company.BankProduct.Data.BankProductData;
@@ -108,14 +109,32 @@ class BankTest {
         assertArrayEquals(new Object[]{returnedProduct.getType(),returnedProduct.getId(),returnedProduct.getBank(),returnedProduct.getOwner()},new Object[]{bankProductType,"0",bank,userLOCAL});
     }
     @Test
-    public void CheckIfBankAccoutIsDelete(){
-//        //given
-//        bank.createAccount("Tester", transferVerification);
-//        //when
-//        bank.deleteAccount(0);
-//        //then
-//        assertEquals(0, bank.getAccounts().size());
+    public void CheckReturnMethodOfBankProduct(){
+        BankProductType bankProductType= BankProductType.ACCOUNT;
+        User  userLOCAL =new User("1234567890",bank);
+        AccountProductData accountProductData= new AccountProductData("0",bank,bankProductType,userLOCAL,transferVerificationMOCK);
+        //when
+        BankProduct returnedProduct=bank.getBankProduct("0",bankProductType);
+        //then
+        assertArrayEquals(new Object[]{returnedProduct.getType(),returnedProduct.getId(),returnedProduct.getBank(),returnedProduct.getOwner()},new Object[]{bankProductType,"0",bank,userLOCAL});
+
     }
+    @Test
+    public void CheckIfBankIfDeleteBankProductMethodWork(){
+        //given
+        BankProductType bankProductType= BankProductType.ACCOUNT;
+        User  userLOCAL =new User("1234567890",bank);
+        AccountProductData accountProductData= new AccountProductData("0",bank,bankProductType,userLOCAL,transferVerificationMOCK);
+        BankProduct returnedProduct=bank.createBankProduct(bankProductType,accountProductData);
+        //when
+        bank.deleteBankProduct("0",bankProductType);
+        //then
+        assertEquals(BankProductStatus.CLOSED, bank.getBankProduct("0",bankProductType).getStatus());
+    }
+
+    /**
+     * InterBankPayments
+     */
     @AfterEach
     public void clearData(){
 //        bank = null;

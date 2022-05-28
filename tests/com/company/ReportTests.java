@@ -37,7 +37,7 @@ class ReportTests {
         when(transactionCommandWithdrwalMOCK.getType()).thenReturn(TransactionType.WITHDRAWAL);
         when(userMOCK.getId()).thenReturn("123456789");
     }
-    
+
     @Test public void CheckTypeOfGetContextIsEmptyString(){
         assertTrue(userPaymentReport.getContent().isEmpty());
     }

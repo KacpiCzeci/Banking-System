@@ -170,6 +170,9 @@ public class Bank {
         this.addToHistory(transactionCommand);
     }
 
+    /**
+     * Tu coś jest nie tak chyba
+     */
     public void takeMoneyFromLoan(Account account, String id, BigDecimal amount){
         TransactionCommand transactionCommand = new TakeLoanCommand(TransactionType.DEPOSE, account, id, amount);
         account.doTransaction(transactionCommand);

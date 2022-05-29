@@ -57,8 +57,9 @@ public class Deposit extends BankProduct {
             returnMoney = this.withdrawMoney(this.balance);
         }
         else {
-            BigDecimal time = new BigDecimal(String.valueOf(ChronoUnit.MONTHS.between(this.dateOfOpening, closeDate)));
-            returnMoney = this.withdrawMoney(this.balance).add(interestRate.calculateInterestRate(new BigDecimal("0.03"), this.balance, time));
+            BigDecimal time = new BigDecimal(String.valueOf(ChronoUnit.MONTHS.between(closeDate,this.dateOfOpening)));
+            BigDecimal interestRateAdd=interestRate.calculateInterestRate(new BigDecimal("0.03"), this.balance, time);
+            returnMoney = this.withdrawMoney(this.balance).add(interestRateAdd);
         }
         this.status = BankProductStatus.CLOSED;
         return returnMoney;

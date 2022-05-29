@@ -17,12 +17,11 @@ import static org.mockito.Mockito.when;
 
 class LoanTest {
 
-    public Loan loanGLOBAL;
-    LocalDateTime localDateTimeCONST= LocalDateTime.now().plusYears(1);
+    private Loan loanGLOBAL;
+    private LocalDateTime localDateTimeCONST= LocalDateTime.now().plusYears(1);
 
     @Mock Bank bankMOCK;
     @Mock User userMOCK;
-    @Mock InterestRate interestRateMOCK;
 
     @BeforeEach
     public void setUp(){
@@ -60,7 +59,7 @@ class LoanTest {
         assertEquals(expectedBalance, loanGLOBAL.getBalance());
     }
     @Test
-    public void TestingPayLoan(){
+    public void TestingIfLoanGetStatusClosedAfterPaidIt(){
         //given
         loanGLOBAL.takeLoan(new BigDecimal(10000.00d));
         //when

@@ -56,7 +56,7 @@ public class Account extends BankProduct {
 
     @Override
     public BigDecimal withdrawMoney(BigDecimal money) {
-        if(this.balance.compareTo(money) >= 0){
+        if(this.balance.compareTo(money) >= 0 && money.compareTo(new BigDecimal("0.00")) >= 0){
             this.balance = new BigDecimal(String.valueOf(this.balance.subtract(money)));
             return money;
         }
@@ -67,7 +67,9 @@ public class Account extends BankProduct {
 
     @Override
     public void receiveMoney(BigDecimal money) {
-        this.balance = new BigDecimal(String.valueOf(this.balance.add(money)));
+        if(money.compareTo(new BigDecimal("0.00")) >= 0){
+            this.balance = new BigDecimal(String.valueOf(this.balance.add(money)));
+        }
     }
 
     @Override
@@ -96,7 +98,7 @@ public class Account extends BankProduct {
 
     public void deposeMoneyToDeposit(String id, BigDecimal amount){
         Deposit deposit = this.deposits.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-        if(deposit != null && this.balance.compareTo(amount) >= 0){
+        if(deposit != null && this.balance.compareTo(amount) >= 0 && amount.compareTo(new BigDecimal("0.00")) >= 0){
             deposit.depositMoney(amount);
             this.withdrawMoney(amount);
         }
@@ -117,7 +119,7 @@ public class Account extends BankProduct {
 
     public void takeMoneyFromLoan(String id, BigDecimal amount){
         Loan loan = this.loans.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-        if(loan != null){
+        if(loan != null && amount.compareTo(new BigDecimal("0.00")) >= 0){
             this.receiveMoney(loan.takeLoan(amount));
         }
     }
@@ -129,8 +131,8 @@ public class Account extends BankProduct {
         }
     }
 
-    public void addCard(String id, Long number, Integer cvc, LocalDateTime expDate){
-        this.cards.add(new Card(id, this, number, cvc, expDate));
+    public void addCard(Card card){
+        this.cards.add(card);
     }
 
     public void removeCard(Long id){

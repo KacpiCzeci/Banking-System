@@ -15,18 +15,12 @@ public class AddCardCommand implements TransactionCommand {
     private final LocalDateTime dateOfTransaction = LocalDateTime.now();
     private String description = "";
     private final Account account;
-    private final String id;
-    private final Long number;
-    private final Integer cvc;
-    private final LocalDateTime expDate;
+    private final Card card;
 
-    public AddCardCommand(TransactionType type, Account account, String id, Long number, Integer cvc, LocalDateTime expDate){
+    public AddCardCommand(TransactionType type, Account account, Card card){
         this.type = type;
         this.account = account;
-        this.id = id;
-        this.number = number;
-        this.cvc = cvc;
-        this.expDate = expDate;
+        this.card = card;
     }
 
     @Override
@@ -46,13 +40,13 @@ public class AddCardCommand implements TransactionCommand {
 
     @Override
     public void execute() {
-        this.account.addCard(this.id, this.number, this.cvc, this.expDate);
+        this.account.addCard(this.card);
         this.createDescription();
     }
 
     @Override
     public void createDescription() {
-        this.description =  "Added new card " + this.number + ".";
+        this.description =  "Added new card " + this.card.getNumber() + ".";
     }
 
     @Override

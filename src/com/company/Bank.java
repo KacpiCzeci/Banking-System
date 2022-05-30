@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.BankProduct.*;
 import com.company.BankProduct.Data.BankProductData;
+import com.company.Card.Card;
 import com.company.InterBankPayment.IBPAagency;
 import com.company.InterestRate.InterestRate;
 import com.company.Transaction.ConcreteCommands.*;
@@ -208,7 +209,7 @@ public class Bank {
     }
 
     public void addCard(Account account, String id, Long number, Integer cvc, LocalDateTime expDate){
-        TransactionCommand transactionCommand = new AddCardCommand(TransactionType.ADDCARD, account, id, number, cvc, expDate);
+        TransactionCommand transactionCommand = new AddCardCommand(TransactionType.ADDCARD, account, new Card(id, account, number, cvc, expDate));
         account.doTransaction(transactionCommand);
         account.addOperationToHistory(transactionCommand);
         this.addToHistory(transactionCommand);

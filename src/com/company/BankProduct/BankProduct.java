@@ -47,6 +47,7 @@ public abstract class BankProduct {
         return owner;
     }
 
+
     public BigDecimal getBalance() {
         return balance;
     }

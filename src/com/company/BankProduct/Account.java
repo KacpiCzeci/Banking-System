@@ -28,6 +28,7 @@ public class Account extends BankProduct {
         this.transferVerification = trVr;
     }
 
+    @Override
     public ArrayList<TransactionCommand> getHistoryOfOperations() {
         return this.historyOfOperations.getHistory();
     }

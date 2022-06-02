@@ -197,7 +197,7 @@ public class BankProductOrganizerTest {
 
         assertEquals(bankProductOrganizer.getAccounts().size(), 1);
     }
-    
+
     @AfterEach
     public void clearDataEach(){
         bankProductOrganizer = null;

@@ -8,6 +8,8 @@ import com.company.BankProduct.Data.AccountProductData;
 import com.company.BankProduct.Data.BankProductData;
 import com.company.InterBankPayment.IBPAagency;
 import com.company.Transaction.ConcreteCommands.InterBankCommand;
+import com.company.Transaction.ConcreteCommands.RemoveCard;
+import com.company.Transaction.TransactionCommand;
 import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
 import org.junit.jupiter.api.AfterEach;
@@ -41,8 +43,9 @@ class BankTest {
 
     @BeforeEach
     public void setUp(){
-        bank = new Bank("0","TestBank", _ibpaAgencyMOCK);
         MockitoAnnotations.initMocks(this);
+
+        bank = new Bank("0","TestBank", _ibpaAgencyMOCK);
     }
 
     @Test
@@ -156,6 +159,7 @@ class BankTest {
 //        verify(returnedProductBankMock, times(1)).doTransaction(transactionCommandMOCK);
 
     }
+
     @AfterEach
     public void clearData(){
 //        bank = null;

@@ -47,7 +47,7 @@ public class DeposeCommandTest {
     @Test
     public void acceptVisitorTest(){
         deposeCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(deposeCommand);
+        verify(_ReportVisitor, times(1)).visit(deposeCommand);
     }
 
     @AfterEach

@@ -50,7 +50,7 @@ public class CloseDepositCommandTest {
     @Test
     public void acceptVisitorTest(){
         closingDepositCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(closingDepositCommand);
+        verify(_ReportVisitor, times(1)).visit(closingDepositCommand);
     }
 
     @AfterEach

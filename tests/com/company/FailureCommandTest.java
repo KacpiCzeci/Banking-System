@@ -48,7 +48,7 @@ public class FailureCommandTest {
     @Test
     public void acceptVisitorTest(){
         failureCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(failureCommand);
+        verify(_ReportVisitor, times(1)).visit(failureCommand);
     }
 
     @AfterEach

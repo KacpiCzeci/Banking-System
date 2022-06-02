@@ -195,7 +195,7 @@ class DebitAccountTest {
         //when
         debitAccount.acceptVisitor(reportVisitorMOCK);
         //then
-        verify(reportVisitorMOCK, times(1)).visitBankProduct(debitAccount);
+        verify(reportVisitorMOCK, times(1)).visit(debitAccount);
     }
     @Test
     public void openDepositTestRedirectToAccount(){

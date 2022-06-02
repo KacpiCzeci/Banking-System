@@ -88,7 +88,7 @@ public class Account extends BankProduct {
 
     @Override
     public void acceptVisitor(ReportVisitor reportVisitor) {
-        reportVisitor.visitBankProduct(this);
+        reportVisitor.visit(this);
     }
 
     public void openDeposit(String id, Integer time){

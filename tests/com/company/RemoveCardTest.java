@@ -42,7 +42,7 @@ public class RemoveCardTest {
     @Test
     public void acceptVisitorTest(){
         removeCard.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(removeCard);
+        verify(_ReportVisitor, times(1)).visit(removeCard);
     }
 
     @AfterEach

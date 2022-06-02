@@ -65,7 +65,7 @@ public class InterBankCommandTest {
     @Test
     public void acceptVisitorTest(){
         interBankCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(interBankCommand);
+        verify(_ReportVisitor, times(1)).visit(interBankCommand);
     }
 
     @AfterEach

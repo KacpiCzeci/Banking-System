@@ -52,7 +52,7 @@ public class OpenDepositCommandTest {
     @Test
     public void acceptVisitorTest(){
         openDepositCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(openDepositCommand);
+        verify(_ReportVisitor, times(1)).visit(openDepositCommand);
     }
 
     @AfterEach

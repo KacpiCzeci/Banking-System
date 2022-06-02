@@ -45,7 +45,7 @@ public class PaymentCommandTest {
     @Test
     public void acceptVisitorTest(){
         paymentCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(paymentCommand);
+        verify(_ReportVisitor, times(1)).visit(paymentCommand);
     }
 
     @AfterEach

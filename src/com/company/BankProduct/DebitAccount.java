@@ -157,7 +157,7 @@ public class DebitAccount extends BankProductDecorator {
 
     @Override
     public void acceptVisitor(ReportVisitor reportVisitor) {
-        reportVisitor.visitBankProduct(this);
+        reportVisitor.visit(this);
     }
 
     /**

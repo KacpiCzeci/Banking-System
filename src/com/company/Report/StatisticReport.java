@@ -48,18 +48,18 @@ public class StatisticReport implements ReportVisitor{
     }
 
     @Override
-    public void visitBankProduct(BankProduct bankProduct) {
+    public void visit(BankProduct bankProduct) {
         this.accountAmount++;
         this.balance = this.balance.add(bankProduct.getBalance());
     }
 
     @Override
-    public void visitTransaction(TransactionCommand transactionCommand) {
+    public void visit(TransactionCommand transactionCommand) {
         this.transactionAmount++;
     }
 
     @Override
-    public void visitUser(User user) {
+    public void visit(User user) {
         this.user++;
     }
 }

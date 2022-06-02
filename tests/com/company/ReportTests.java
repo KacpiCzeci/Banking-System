@@ -63,7 +63,7 @@ class ReportTests {
         BigDecimal expectedBalance = new BigDecimal(1.00d).setScale(2);
         Integer expectedAllAccount = 1;
         //when
-        userPaymentReport.visitBankProduct(bankProductMOCK);//visitor
+        userPaymentReport.visit(bankProductMOCK);//visitor
         //then
         userPaymentReport.generateReport();
         String[] lines = userPaymentReport.getContent().split(System.getProperty("line.separator"));
@@ -81,7 +81,7 @@ class ReportTests {
         Integer expectedNummberOfPayments=1;
         Integer expectedNumberOfOperation=1;
         //when
-        userPaymentReport.visitTransaction(transactionCommandPaymentMOCK); //visitor
+        userPaymentReport.visit(transactionCommandPaymentMOCK); //visitor
         //then
         userPaymentReport.generateReport();
 
@@ -98,7 +98,7 @@ class ReportTests {
         Integer expectedNummberOfWithdrwal=1;
         Integer expectedNumberOfOperation=1;
         //when
-        userPaymentReport.visitTransaction(transactionCommandWithdrwalMOCK); //visitor
+        userPaymentReport.visit(transactionCommandWithdrwalMOCK); //visitor
         //then
         userPaymentReport.generateReport();
 
@@ -113,7 +113,7 @@ class ReportTests {
 //        given
         String expextedUser="123456789";
 //        when
-        userPaymentReport.visitUser(userMOCK);
+        userPaymentReport.visit(userMOCK);
 //        then
         userPaymentReport.generateReport();
         String[] lines = userPaymentReport.getContent().split(System.getProperty("line.separator"));
@@ -141,13 +141,13 @@ class ReportTests {
         expectedContent = expectedContent + "Total number of operations: " + Integer.toString(expectedNumberOfOperation) + "\n";
         expectedContent = expectedContent + "Total number of bank products: " + Integer.toString(expectedAllAccount) + "\n";
 //        when
-        userPaymentReport.visitBankProduct(bankProductMOCK);
-        userPaymentReport.visitTransaction(transactionCommandPaymentMOCK);
-        userPaymentReport.visitTransaction(transactionCommandPaymentMOCK);
-        userPaymentReport.visitTransaction(transactionCommandWithdrwalMOCK);
-        userPaymentReport.visitTransaction(transactionCommandWithdrwalMOCK);
-        userPaymentReport.visitTransaction(transactionCommandWithdrwalMOCK);
-        userPaymentReport.visitUser(userMOCK);
+        userPaymentReport.visit(bankProductMOCK);
+        userPaymentReport.visit(transactionCommandPaymentMOCK);
+        userPaymentReport.visit(transactionCommandPaymentMOCK);
+        userPaymentReport.visit(transactionCommandWithdrwalMOCK);
+        userPaymentReport.visit(transactionCommandWithdrwalMOCK);
+        userPaymentReport.visit(transactionCommandWithdrwalMOCK);
+        userPaymentReport.visit(userMOCK);
 //        then
         userPaymentReport.generateReport();
 

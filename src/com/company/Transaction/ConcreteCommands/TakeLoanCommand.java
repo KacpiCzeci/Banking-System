@@ -52,6 +52,6 @@ public class TakeLoanCommand implements TransactionCommand {
 
     @Override
     public void acceptVisitor(ReportVisitor reportVisitor) {
-        reportVisitor.visitTransaction(this);
+        reportVisitor.visit(this);
     }
 }

@@ -49,7 +49,7 @@ public class OpenLoanCommandTest {
     @Test
     public void acceptVisitorTest(){
         openLoanCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(openLoanCommand);
+        verify(_ReportVisitor, times(1)).visit(openLoanCommand);
     }
 
     @AfterEach

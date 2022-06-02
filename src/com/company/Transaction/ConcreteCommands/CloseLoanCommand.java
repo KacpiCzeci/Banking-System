@@ -49,6 +49,6 @@ public class CloseLoanCommand implements TransactionCommand {
 
     @Override
     public void acceptVisitor(ReportVisitor reportVisitor) {
-        reportVisitor.visitTransaction(this);
+        reportVisitor.visit(this);
     }
 }

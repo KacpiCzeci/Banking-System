@@ -29,6 +29,6 @@ public class User {
     }
 
     public void acceptVisitor(ReportVisitor reportVisitor) {
-        reportVisitor.visitUser(this);
+        reportVisitor.visit(this);
     }
 }

@@ -47,7 +47,7 @@ public class UseCardCommandTest {
     @Test
     public void acceptVisitorTest(){
         useCardCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(useCardCommand);
+        verify(_ReportVisitor, times(1)).visit(useCardCommand);
     }
 
     @AfterEach

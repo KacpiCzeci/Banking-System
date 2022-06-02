@@ -137,7 +137,7 @@ class AccountTest {
     @Test
     public void acceptVisitorTest(){
         account.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitBankProduct(account);
+        verify(_ReportVisitor, times(1)).visit(account);
     }
 
     @Test

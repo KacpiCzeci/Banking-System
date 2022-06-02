@@ -47,7 +47,7 @@ public class IncomeCommandTest {
     @Test
     public void acceptVisitorTest(){
         incomeCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(incomeCommand);
+        verify(_ReportVisitor, times(1)).visit(incomeCommand);
     }
 
     @AfterEach

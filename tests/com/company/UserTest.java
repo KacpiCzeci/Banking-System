@@ -27,7 +27,7 @@ public class UserTest {
     @Test
     public void acceptVisitorTest(){
         user.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitUser(user);
+        verify(_ReportVisitor, times(1)).visit(user);
     }
 
     @Test

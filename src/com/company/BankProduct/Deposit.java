@@ -44,7 +44,7 @@ public class Deposit extends BankProduct {
 
     @Override
     public void acceptVisitor(ReportVisitor reportVisitor) {
-        reportVisitor.visitBankProduct(this);
+        reportVisitor.visit(this);
     }
 
     public void depositMoney(BigDecimal amount){

@@ -53,13 +53,13 @@ public class UserPaymentReport implements ReportVisitor {
     }
 
     @Override
-    public void visitBankProduct(BankProduct bankProduct) {
+    public void visit(BankProduct bankProduct) {
         this.allAcc++;
         this.allBalance = this.allBalance.add(bankProduct.getBalance());
     }
 
     @Override
-    public void visitTransaction(TransactionCommand transactionCommand) {
+    public void visit(TransactionCommand transactionCommand) {
         if(transactionCommand.getType().equals(TransactionType.PAYMENT)){
             this.paymentT++;
         }
@@ -70,7 +70,7 @@ public class UserPaymentReport implements ReportVisitor {
     }
 
     @Override
-    public void visitUser(User user) {
+    public void visit(User user) {
         this.user = user.getId();
     }
 }

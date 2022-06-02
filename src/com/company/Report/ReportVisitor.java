@@ -14,7 +14,7 @@ public interface ReportVisitor {
     public LocalDateTime getGenerated();
     public void generateReport();
 
-    public abstract void visitBankProduct(BankProduct bankProduct);
-    public abstract void visitTransaction(TransactionCommand transactionCommand);
-    public abstract void visitUser(User user);
+    public abstract void visit(BankProduct bankProduct);
+    public abstract void visit(TransactionCommand transactionCommand);
+    public abstract void visit(User user);
 }

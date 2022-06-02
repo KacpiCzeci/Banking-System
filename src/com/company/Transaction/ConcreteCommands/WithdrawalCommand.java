@@ -50,7 +50,7 @@ public class WithdrawalCommand implements TransactionCommand {
 
     @Override
     public void acceptVisitor(ReportVisitor reportVisitor) {
-        reportVisitor.visitTransaction(this);
+        reportVisitor.visit(this);
     }
 
     public BigDecimal getAmount() {

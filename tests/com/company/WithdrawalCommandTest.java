@@ -45,7 +45,7 @@ public class WithdrawalCommandTest {
     @Test
     public void acceptVisitorTest(){
         withdrawalCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(withdrawalCommand);
+        verify(_ReportVisitor, times(1)).visit(withdrawalCommand);
     }
 
     @AfterEach

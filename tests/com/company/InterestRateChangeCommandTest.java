@@ -48,7 +48,7 @@ public class InterestRateChangeCommandTest {
     @Test
     public void acceptVisitorTest(){
         interestRateChangeCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(interestRateChangeCommand);
+        verify(_ReportVisitor, times(1)).visit(interestRateChangeCommand);
     }
 
     @AfterEach

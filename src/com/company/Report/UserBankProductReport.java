@@ -52,17 +52,17 @@ public class UserBankProductReport implements ReportVisitor{
     }
 
     @Override
-    public void visitBankProduct(BankProduct bankProduct) {
+    public void visit(BankProduct bankProduct) {
         this.products.add(new UserBankProductData(bankProduct.getType().name(), bankProduct.getId(), bankProduct.getBalance()));
     }
 
     @Override
-    public void visitTransaction(TransactionCommand transactionCommand) {
+    public void visit(TransactionCommand transactionCommand) {
 
     }
 
     @Override
-    public void visitUser(User user) {
+    public void visit(User user) {
         this.user = user.getId();
     }
 }

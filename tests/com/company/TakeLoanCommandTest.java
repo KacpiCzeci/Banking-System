@@ -44,7 +44,7 @@ public class TakeLoanCommandTest {
     @Test
     public void acceptVisitorTest(){
         takeLoanCommand.acceptVisitor(_ReportVisitor);
-        verify(_ReportVisitor, times(1)).visitTransaction(takeLoanCommand);
+        verify(_ReportVisitor, times(1)).visit(takeLoanCommand);
     }
 
     @AfterEach

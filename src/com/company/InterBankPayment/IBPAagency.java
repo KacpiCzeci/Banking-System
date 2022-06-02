@@ -42,6 +42,5 @@ public class IBPAagency {
                 interBankPayment.getSenderBank().takeFailure(new FailureCommand(TransactionType.FAILURE, interBankPayment, interBankPayment.getAccount()));
             }
         }
-
     }
 }

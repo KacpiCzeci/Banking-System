@@ -19,12 +19,11 @@ class CardTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        card = new Card("123456789", account, 123L, 123, null);
     }
 
     @Test
     void setStatusTest() {
-        card = new Card("123456789", account, 123L, 123, null);
-
         assertEquals(card.getStatus(), BankProductStatus.ACTIVE);
         card.setStatus(BankProductStatus.CLOSED);
         assertEquals(card.getStatus(), BankProductStatus.CLOSED);

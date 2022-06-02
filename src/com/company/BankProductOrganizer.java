@@ -35,13 +35,13 @@ public class BankProductOrganizer {
     public BankProduct returnProduct(String id, BankProductType type){
         switch (type){
             case ACCOUNT:
-                return accounts.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
+                return accounts.stream().filter(product -> product.getId().equals(id) && product.getType().equals(BankProductType.ACCOUNT)).findFirst().orElse(null);
             case DEBITACCOUNT:
-                return debitAccounts.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
+                return debitAccounts.stream().filter(product -> product.getId().equals(id) && product.getType().equals(BankProductType.DEBITACCOUNT)).findFirst().orElse(null);
             case DEPOSIT:
-                return deposits.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
+                return deposits.stream().filter(product -> product.getId().equals(id) && product.getType().equals(BankProductType.DEPOSIT)).findFirst().orElse(null);
             case LOAN:
-                return loans.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
+                return loans.stream().filter(product -> product.getId().equals(id) && product.getType().equals(BankProductType.LOAN)).findFirst().orElse(null);
             default:
                 return null;
         }
@@ -51,25 +51,25 @@ public class BankProductOrganizer {
         switch (type){
             case ACCOUNT:
                 Account account = accounts.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-                if (account != null){
+                if (account != null && type == account.getType()){
                     account.setStatus(BankProductStatus.CLOSED);
                 }
                 break;
             case DEBITACCOUNT:
                 DebitAccount debitAccount = debitAccounts.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-                if (debitAccount != null){
+                if (debitAccount != null && type == debitAccount.getType()){
                     debitAccount.setStatus(BankProductStatus.CLOSED);
                 }
                 break;
             case DEPOSIT:
                 Deposit deposit = deposits.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-                if (deposit != null){
+                if (deposit != null && type == deposit.getType()){
                     deposit.setStatus(BankProductStatus.CLOSED);
                 }
                 break;
             case LOAN:
                 Loan loan = loans.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
-                if (loan != null){
+                if (loan != null && type == loan.getType()){
                     loan.setStatus(BankProductStatus.CLOSED);
                 }
                 break;
@@ -78,4 +78,19 @@ public class BankProductOrganizer {
         }
     }
 
+    public ArrayList<Loan> getLoans() {
+        return loans;
+    }
+
+    public ArrayList<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    public ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
+    public ArrayList<DebitAccount> getDebitAccounts() {
+        return debitAccounts;
+    }
 }

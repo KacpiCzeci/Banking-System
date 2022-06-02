@@ -15,7 +15,7 @@ public class PaymentVerification implements TransferVerification{
 
     public Boolean accountVerification(PaymentCommand paymentCommand)
     {
-        BankProduct account = bank.getBankProduct(paymentCommand.getReceiver().getId(), BankProductType.ACCOUNT);
+        BankProduct account = bank.getBankProduct(paymentCommand.getReceiver().getId(), paymentCommand.getReceiver().getType());
         return account != null;
     }
 

@@ -52,4 +52,12 @@ public class WithdrawalCommand implements TransactionCommand {
     public void acceptVisitor(ReportVisitor reportVisitor) {
         reportVisitor.visitTransaction(this);
     }
+
+    public BigDecimal getAmount() {
+        return this.amount;
+    }
+
+    public BankProduct getSender() {
+        return this.sender;
+    }
 }

@@ -48,7 +48,7 @@ class BankTest {
         bank = new Bank("0","TestBank", ibpaAgencyMOCK);
         MockitoAnnotations.initMocks(this);
 
-        bank = new Bank("0","TestBank", _ibpaAgencyMOCK);
+        bank = new Bank("0","TestBank", ibpaAgencyMOCK);
     }
 
     @Test

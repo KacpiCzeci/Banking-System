@@ -31,17 +31,31 @@ public class UserTest {
     }
 
     @Test
-    void setStatusTest() {
+    void setStatusDeleteWhenActiveTest() {
         assertEquals(user.getStatus(), UserStatus.ACTIVE);
         user.setStatus(UserStatus.DELETED);
         assertEquals(user.getStatus(), UserStatus.DELETED);
+    }
 
+    @Test
+    void setStatusDeleteWhenDeletedTest() {
         user.setStatus(UserStatus.DELETED);
         assertEquals(user.getStatus(), UserStatus.DELETED);
+        user.setStatus(UserStatus.DELETED);
+        assertEquals(user.getStatus(), UserStatus.DELETED);
+    }
 
+    @Test
+    void setStatusActiveWhenActiveTest() {
+        assertEquals(user.getStatus(), UserStatus.ACTIVE);
         user.setStatus(UserStatus.ACTIVE);
         assertEquals(user.getStatus(), UserStatus.ACTIVE);
+    }
 
+    @Test
+    void setStatusActiveWhenDeleteTest() {
+        user.setStatus(UserStatus.DELETED);
+        assertEquals(user.getStatus(), UserStatus.DELETED);
         user.setStatus(UserStatus.ACTIVE);
         assertEquals(user.getStatus(), UserStatus.ACTIVE);
     }

@@ -8,13 +8,10 @@ import com.company.BankProduct.Data.AccountProductData;
 import com.company.BankProduct.Data.BankProductData;
 import com.company.InterBankPayment.IBPAagency;
 import com.company.Transaction.ConcreteCommands.InterBankCommand;
-import com.company.Transaction.ConcreteCommands.RemoveCard;
 import com.company.Transaction.TransactionCommand;
-import com.company.Transaction.TransactionType;
 import com.company.TransferVerification.TransferVerification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -35,14 +32,20 @@ class BankTest {
     /**
      * Mock's
      */
-    @Mock public IBPAagency _ibpaAgencyMOCK;
-    @Mock public User _userMOCK;
+    @Mock IBPAagency ibpaAgencyMOCK;
+    @Mock User userMOCK;
+    @Mock Account account1MOCK;
+    @Mock Account account2MOCK;
     @Mock BankProductData bankProductDataMOCK;
     @Mock TransferVerification transferVerificationMOCK;
-    @Mock InterBankCommand transactionCommandMOCK;
+    @Mock InterBankCommand interBankCommandMOCK;
+    @Mock TransactionCommand transactionCommandMOCK;
+    @Mock BankProductOrganizer bankProductOrganizerMOCK;
+    @Mock WithdrawalVerificationTest withdrawalVerificationTestMOCK;
 
     @BeforeEach
     public void setUp(){
+        bank = new Bank("0","TestBank", ibpaAgencyMOCK);
         MockitoAnnotations.initMocks(this);
 
         bank = new Bank("0","TestBank", _ibpaAgencyMOCK);
@@ -99,7 +102,7 @@ class BankTest {
         //given
         Bank bankMock =mock(Bank.class);
         BankProductType bankProductType= BankProductType.ACCOUNT;
-        AccountProductData accountProductData= new AccountProductData("0",bankMock,bankProductType,_userMOCK,transferVerificationMOCK);
+        AccountProductData accountProductData= new AccountProductData("0",bankMock,bankProductType, userMOCK,transferVerificationMOCK);
         //when
         bankMock.createBankProduct(bankProductType,accountProductData);
         //then
@@ -140,28 +143,5 @@ class BankTest {
         bank.deleteBankProduct("0",bankProductType);
         //then
         assertEquals(BankProductStatus.CLOSED, bank.getBankProduct("0",bankProductType).getStatus());
-    }
-
-    /**
-     * InterBankPayments
-     */
-    @Test
-    public void MakeInterBankPayments(){
-        //given
-//        Bank bankMock =mock(Bank.class);
-//        BankProductType bankProductType= BankProductType.ACCOUNT;
-//        AccountProductData accountProductData= new AccountProductData("0",bankMock,bankProductType,_userMOCK,transferVerificationMOCK);
-//        Account returnedProductBankMock=mock(Account.class);
-//        //when
-//        bankMock.makeInterBankPayments(returnedProductBankMock,bankMock.getId(),"0",new BigDecimal(0.1d));
-////        InterBankCommand transactionCommand = new InterBankCommand(TransactionType.INTERBANKPAYMENT, returnedProductBankMock,  this, idBank, idAccount, amount);
-//        //then
-//        verify(returnedProductBankMock, times(1)).doTransaction(transactionCommandMOCK);
-
-    }
-
-    @AfterEach
-    public void clearData(){
-//        bank = null;
     }
 }

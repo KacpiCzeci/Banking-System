@@ -20,5 +20,6 @@ public enum TransactionType {
     FAILURE,
     ADDCARD,
     REMOVECARD,
-    USECARD
+    USECARD,
+    TAKELOAN
 }

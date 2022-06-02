@@ -48,6 +48,7 @@ public class FailureCommand implements TransactionCommand {
     @Override
     public void execute() {
         receiver.handleFailure(this.transaction);
+        this.createDescription();
     }
 
     @Override

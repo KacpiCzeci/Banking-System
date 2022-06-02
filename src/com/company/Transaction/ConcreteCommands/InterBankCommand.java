@@ -29,7 +29,9 @@ public class InterBankCommand implements TransactionCommand {
     }
 
     public void setType(TransactionType type){
-        this.type = type;
+        if(type.equals(TransactionType.INTERBANKINCOME) || type.equals(TransactionType.INTERBANKPAYMENT)){
+            this.type = type;
+        }
     }
 
     public String getReceiverId() {
@@ -71,9 +73,11 @@ public class InterBankCommand implements TransactionCommand {
     public void execute() {
         if(this.type.equals(TransactionType.INTERBANKPAYMENT)){
             this.account.withdrawMoney(this.amount);
+            createDescription();
         }
         else if(this.type.equals(TransactionType.INTERBANKINCOME)){
             this.account.receiveMoney(this.amount);
+            createDescription();
         }
     }
 

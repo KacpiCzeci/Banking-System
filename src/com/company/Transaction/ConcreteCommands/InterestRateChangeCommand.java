@@ -46,7 +46,7 @@ public class InterestRateChangeCommand implements TransactionCommand {
 
     @Override
     public void createDescription() {
-        this.description =  "Changed interest rates to " + this.type.name() + ".";
+        this.description =  "Changed interest rates.";
     }
 
     @Override
